@@ -1,21 +1,14 @@
 <!doctype html>
-<html>
+<html style="width: 100%; height: 100%">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebGL Fluid Enhanced</title>
   </head>
-  <body style="margin: 0; overflow: hidden">
-    <canvas style="width: 100vw; height: 100vh"></canvas>
-    <script type="importmap">
-      {
-        "imports": {
-          "webgl-fluid-enhanced": "./build/index.js"
-        }
-      }
-    </script>
+  <body style="margin: 0; width: 100%; height: 100%; overflow: hidden">
     <script type="module">
-      import webGLFluidEnhanced from 'webgl-fluid-enhanced';
-      webGLFluidEnhanced.simulation(document.querySelector('canvas'));
+      import WebGLFluidEnhanced from 'webgl-fluid-enhanced';
+      const webGLFluidEnhanced = new WebGLFluidEnhanced();
     </script>
   </body>
 </html>

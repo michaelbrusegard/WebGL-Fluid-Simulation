@@ -8,4 +8,4 @@
 *.tsbuildinfo
 
 # build
-/build
+/dist
