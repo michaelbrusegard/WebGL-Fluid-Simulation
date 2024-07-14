@@ -1004,9 +1004,6 @@ class Simulation {
         target,
         Color.normalizeColor(Color.HEXtoRGB(this.backColor)),
       );
-    if (target === null && this.transparent) {
-      this.drawCheckerboard(target);
-    }
     this.drawDisplay(target);
   }
 
@@ -1018,15 +1015,6 @@ class Simulation {
       color.g,
       color.b,
       1,
-    );
-    this.blit(target);
-  }
-
-  private drawCheckerboard(target: null) {
-    this.programs.checkerboardProgram.bind();
-    this.gl.uniform1f(
-      this.programs.checkerboardProgram.uniforms.aspectRatio!,
-      this.canvas.width / this.canvas.height,
     );
     this.blit(target);
   }

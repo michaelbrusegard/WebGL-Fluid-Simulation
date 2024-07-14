@@ -6,7 +6,6 @@ class Programs {
   public copyProgram: Program;
   public clearProgram: Program;
   public colorProgram: Program;
-  public checkerboardProgram: Program;
   public bloomPrefilterProgram: Program;
   public bloomBlurProgram: Program;
   public bloomFinalProgram: Program;
@@ -42,12 +41,6 @@ class Programs {
     this.colorProgram = new Program(
       shaders.baseVertexShader,
       shaders.colorShader,
-      gl,
-    );
-
-    this.checkerboardProgram = new Program(
-      shaders.baseVertexShader,
-      shaders.checkerboardShader,
       gl,
     );
 

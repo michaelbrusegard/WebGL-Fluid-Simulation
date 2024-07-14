@@ -2,6 +2,13 @@
   "name": "webgl-fluid-enhanced",
   "version": "0.6.1",
   "description": "WebGL Fluid Simulation for modern webpages (works even on mobile)",
+  "keywords": [
+    "webgl",
+    "background",
+    "navier-strokes",
+    "fluid-simulation",
+    "es-module"
+  ],
   "author": "Michael Brusegard",
   "license": "MIT",
   "type": "module",
