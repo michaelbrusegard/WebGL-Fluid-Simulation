@@ -19,9 +19,9 @@ class Color {
     }
 
     const c = Color.HSVtoRGB(hue, saturation, brightness);
-    c.r *= 0.1;
-    c.g *= 0.1;
-    c.b *= 0.1;
+    c.r *= 0.15;
+    c.g *= 0.15;
+    c.b *= 0.15;
     return c;
   }
 

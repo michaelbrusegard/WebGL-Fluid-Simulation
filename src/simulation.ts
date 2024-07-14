@@ -62,17 +62,18 @@ class Simulation {
   private _bloom!: FBO;
   private _sunrays!: FBO;
   private _sunraysTemp!: FBO;
+  private _invert = false;
 
   constructor(container: HTMLElement) {
     this.canvas = document.createElement('canvas');
     this.canvas.style.width = '100%';
     this.canvas.style.height = '100%';
-    this.canvas.style.filter = 'invert(1)';
     container.appendChild(this.canvas);
     this.resizeCanvas();
 
-    this.pointers.push(new Pointer(this.colorPalette, this.brightness));
+    this.invert = false;
 
+    this.pointers.push(new Pointer(this.colorPalette, this.brightness));
     const { gl, ext } = this.getWebGLContext();
     this.gl = gl;
     this.ext = ext;
@@ -1230,6 +1231,14 @@ class Simulation {
     const datauri = captureCanvas.toDataURL();
     Screenshot.downloadURI('fluid.png', datauri);
     URL.revokeObjectURL(datauri);
+  }
+
+  public get invert(): boolean {
+    return this._invert;
+  }
+  public set invert(value: boolean) {
+    this._invert = value;
+    this.canvas.style.filter = value ? 'invert(1)' : 'none';
   }
 }
 
