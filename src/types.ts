@@ -45,3 +45,38 @@ export type HSVColor = {
   v: number;
 };
 
+type ConfigOptions = {
+  simResolution: number;
+  dyeResolution: number;
+  captureResolution: number;
+  densityDissipation: number;
+  velocityDissipation: number;
+  pressure: number;
+  pressureIterations: number;
+  curl: number;
+  splatRadius: number;
+  splatForce: number;
+  shading: boolean;
+  colorful: boolean;
+  colorUpdateSpeed: number;
+  colorPalette: string[];
+  hover: boolean;
+  backColor: string;
+  inverted: boolean;
+  transparent: boolean;
+  brightness: number;
+  bloom: boolean;
+  bloomIterations: number;
+  bloomResolution: number;
+  bloomIntensity: number;
+  bloomThreshold: number;
+  bloomSoftKnee: number;
+  sunrays: boolean;
+  sunraysResolution: number;
+  sunraysWeight: number;
+};
+
+type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
+  U[keyof U];
+
+export type Config = AtLeastOne<ConfigOptions>;

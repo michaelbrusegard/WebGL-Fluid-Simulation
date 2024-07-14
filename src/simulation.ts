@@ -29,8 +29,6 @@ class Simulation {
   public colorUpdateSpeed = 10;
   public colorPalette: string[] = [];
   public hover = true;
-  public paused = false;
-  public drawWhilePaused = false;
   public backColor = '#000000';
   public transparent = false;
   public brightness = 0.5;
@@ -43,7 +41,10 @@ class Simulation {
   public sunrays = true;
   public sunraysResolution = 196;
   public sunraysWeight = 1.0;
-  public canvas: HTMLCanvasElement;
+  public paused = false;
+  public drawWhilePaused = false;
+  private _inverted = false;
+  private canvas: HTMLCanvasElement;
   private gl: WebGL2RenderingContext;
   private ext: ExtraContext;
   private splatStack: number[] = [];
@@ -62,7 +63,6 @@ class Simulation {
   private _bloom!: FBO;
   private _sunrays!: FBO;
   private _sunraysTemp!: FBO;
-  private _invert = false;
 
   constructor(container: HTMLElement) {
     this.canvas = document.createElement('canvas');
@@ -71,7 +71,7 @@ class Simulation {
     container.appendChild(this.canvas);
     this.resizeCanvas();
 
-    this.invert = false;
+    this.inverted = false;
 
     this.pointers.push(new Pointer(this.colorPalette, this.brightness));
     const { gl, ext } = this.getWebGLContext();
@@ -102,7 +102,7 @@ class Simulation {
       this.gl,
     );
 
-    this.updateKeywords(this.displayMaterial);
+    this.updateKeywords();
     this.initFramebuffers();
 
     this.update = this.update.bind(this);
@@ -359,15 +359,15 @@ class Simulation {
     return /Mobi|Android/i.test(navigator.userAgent);
   }
 
-  private updateKeywords(displayMaterial: Material) {
+  public updateKeywords() {
     const displayKeywords: string[] = [];
     if (this.shading) displayKeywords.push('SHADING');
     if (this.bloom) displayKeywords.push('BLOOM');
     if (this.sunrays) displayKeywords.push('SUNRAYS');
-    displayMaterial.setKeywords(displayKeywords);
+    this.displayMaterial.setKeywords(displayKeywords);
   }
 
-  private initFramebuffers() {
+  public initFramebuffers() {
     const simRes = this.getResolution(this.simResolution);
     const dyeRes = this.getResolution(this.dyeResolution);
 
@@ -1233,11 +1233,11 @@ class Simulation {
     URL.revokeObjectURL(datauri);
   }
 
-  public get invert(): boolean {
-    return this._invert;
+  public get inverted(): boolean {
+    return this._inverted;
   }
-  public set invert(value: boolean) {
-    this._invert = value;
+  public set inverted(value: boolean) {
+    this._inverted = value;
     this.canvas.style.filter = value ? 'invert(1)' : 'none';
   }
 }
