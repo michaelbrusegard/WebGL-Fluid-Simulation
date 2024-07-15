@@ -1,0 +1,9 @@
+{
+  "title": "References",
+  "pages": [
+    "[PavelDoGreat/WebGL-Fluid-Simulation](https://github.com/PavelDoGreat/WebGL-Fluid-Simulation)",
+    "[NVIDIA GPU Gems](https://developer.nvidia.com/gpugems/gpugems/part-vi-beyond-triangles/chapter-38-fast-fluid-dynamics-simulation-gpu)",
+    "[mharrys/fluids-2d](https://github.com/mharrys/fluids-2d)",
+    "[haxiomic/GPU-Fluid-Experiments](https://github.com/haxiomic/GPU-Fluid-Experiments)"
+  ]
+}
