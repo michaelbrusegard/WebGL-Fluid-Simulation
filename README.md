@@ -202,6 +202,7 @@ export default App;
 
 ```tsx
 'use client';
+
 import { useEffect, useRef } from 'react';
 import webGLFluidEnhanced from 'webgl-fluid-enhanced';
 
@@ -219,7 +220,7 @@ const App = () => {
     });
   }, []);
 
-  return <canvas ref={canvasRef} className="w-screen h-screen" />;
+  return <canvas ref={canvasRef} className='h-screen w-screen' />;
 };
 
 export default App;

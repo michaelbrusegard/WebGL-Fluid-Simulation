@@ -1,13 +1,193 @@
 ---
-title: Hello World
-description: Your first document
+title: Quick Start
+description: Getting Started with Fumadocs
+icon: Album
 ---
 
-Welcome to the docs! You can start writing documents in `/content/docs`.
+## Introduction
 
-## What is Next?
+Fumadocs can be broken down into two parts: Core and UI.
+
+**Core** handles most of the logic, from search functionality, to MDX plugins.
+
+**Fumadocs UI** is the official user interface for Fumadocs.
+
+### Terminology
+
+For a better understanding of the docs, there are some common terminologies you should know:
+
+**Content Source:** The source of your content. Fumadocs MDX, CMS and Contentlayer are examples of content source.
+
+**Page Tree:** A tree of all the pages, separators and folders. It is essential for navigation elements. See [Page Tree](/docs/headless/page-tree).
+
+**MDX File & Page:** A MDX file could be located in a folder, or available remotely. Instead, MDX Page is only referring to `page.mdx`, which is already a page on its own.
+
+You might need to be familiar with Next.js App Router to continue.
+
+## Automatic Installation
+
+Create a new app with `create-fumadocs-app`, it requires Node.js 18+.
+
+<Tabs id='package-manager' persist items={['npm', 'pnpm', 'yarn', 'bun']}>
+
+```bash tab="npm"
+npx create-fumadocs-app
+```
+
+```bash tab="pnpm"
+pnpm create fumadocs-app
+```
+
+```bash tab="yarn"
+yarn create fumadocs-app
+```
+
+```bash tab="bun"
+bun create fumadocs-app
+```
+
+</Tabs>
+
+It will ask you the following questions:
+
+- Which content source to use? (Recommended: Fumadocs MDX)
+- Configure Tailwind CSS?
+- Install dependencies?
+
+After that, it will initialize a new fumadocs app.
+Now you can start hacking!
+
+### Enjoy!
+
+Create your first mdx file in the docs folder.
+
+```mdx title="content/docs/index.mdx"
+---
+title: Hello World
+---
+
+## Yo what's up
+```
+
+Run the app in development mode and see http://localhost:3000/docs.
+
+
+## FAQ
+
+Some common questions you may encounter.
+
+<Accordions>
+    <Accordion id='why-fumadocs-ui' title="Why Fumadocs UI?">
+
+        Feel free to open the demo in CodeSandbox and see if it suits you.
+
+        - Many built-in components
+        - Integrations with Typescript Twoslash, OpenAPI, Math
+        - Flexible and Fast by default
+        - Built on App Router
+        - Use it in an existing Next.js project, without refactoring anything.
+    </Accordion>
+    <Accordion id='customise' title='How to Customise UI?'>
+
+        Fumadocs UI offers Themes, Blocks and Components.
+
+        The design system is built with Tailwind CSS, see [Themes](/docs/ui/theme).
+
+        Components are pre-built elements to enhance your documentation,
+        they are customisable with exposed props like `style` and `className`.
+
+        Blocks are essential elements of docs, providing navigation and basic functionality.
+        We provided many options to customise them, see the **Blocks** section of the docs.
+
+        Although the docs didn't explicitly mention, you can always style the elements with CSS selectors.
+
+    </Accordion>
+    <Accordion id='fix-monorepo-styling' title="How to fix stylings not being applied in Monorepo?">
+
+        Sometimes, `fumadocs-ui` is not installed in the workspace of your Tailwind CSS configuration file. (e.g. a monorepo setup).
+
+        When using the official Tailwind CSS plugin, it will not be able to find the files from `fumadocs-ui`
+        package which contains all styling.
+
+        To fix this, edit the Tailwind CSS configuration and replace `./node_modules` with `../../node_modules` in the `content` section.
+
+        ```diff
+        export default {
+          content: [
+        -   './node_modules/fumadocs-ui/dist/**/*.js',
+        +   '../../node_modules/fumadocs-ui/dist/**/*.js',
+            './components/**/*.{ts,tsx}',
+            ...
+          ],
+        }
+        ```
+
+    </Accordion>
+    <Accordion id='fix-dot-map-error' title="How to fix '@/.map' error?">
+
+        If you are using Fumadocs MDX, the `.map.ts` file will be generated automatically once you start the dev server.
+
+        For more information, see [Setup Guide](/docs/mdx).
+
+    </Accordion>
+    <Accordion id='dynamic-route' title="It uses Dynamic Route, will it be poor in performance?">
+
+        Next.js turns dynamic route into static routes when `generateStaticParams` is configured.
+        Hence, it is as fast as static pages.
+
+    </Accordion>
+    <Accordion id='blog-usage' title="Can I use it for Blog?">
+
+        The answer is yes.
+
+        Fumadocs is built for documentation sites, yet, it is very flexible.
+        You can re-use the typography styles and leverage its built-in remark/rehype plugins.
+        Check our [blog](/blog), it is also built with Fumadocs.
+
+    </Accordion>
+    <Accordion id='pronunciation' title='How to say Fumadocs?'>
+        Fumadocs (Foo-ma docs).
+    </Accordion>
+
+</Accordions>
+
+## Learn More
+
+New to here? Don't worry, we are welcome for your questions.
+
+If you find anything confusing, please give your feedback on [Github Discussion](https://github.com/fuma-nama/fumadocs/discussions)!
 
 <Cards>
-  <Card title="Learn more about Next.js" href="https://nextjs.org/docs" />
-  <Card title="Learn more about Fumadocs" href="https://fumadocs.vercel.app" />
+  <Card
+    href="/docs/ui/page-conventions"
+    title="Organizing Pages"
+    description="Learn how to organize your pages"
+  />
+  <Card
+    href="/docs/ui/internationalization"
+    title="Learn I18n"
+    description="Learn how to implement I18n"
+  />
+  <Card
+    href="/docs/ui/theme"
+    title="Theming"
+    description="Add themes to Fumadocs UI"
+  />
+  <Card
+    href="/docs/ui/markdown"
+    title="Markdown"
+    description="Learn how to write documents in Fumadocs"
+  />
+</Cards>
+
+### From Existing Codebase?
+
+You can follow the Manual Installation guide to get started.
+
+<Cards>
+  <Card
+    href="/docs/ui/manual-installation"
+    title="Manual Installation"
+    description="Create fumadocs app from scratch"
+  />
 </Cards>

@@ -1,11 +1,20 @@
 # dependencies
-/node_modules
+/node_modules/
+/docs/node_modules/
 
 # misc
 .DS_Store
+/docs/next-env.d.ts
 
 # typescript
 *.tsbuildinfo
 
+# generated content
+/docs/.map.ts
+/docs/.contentlayer
+/docs/.content-collections
+
 # build
-/dist
+/dist/
+/docs/out/
+/docs/.next/

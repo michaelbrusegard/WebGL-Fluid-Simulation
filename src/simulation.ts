@@ -1,7 +1,10 @@
-import { Material } from './material';
-import { Programs } from './programs';
-import { Shaders } from './shaders';
 import { Color } from './color';
+import { Material } from './material';
+import { Pointer } from './pointer';
+import { Programs } from './programs';
+import { Screenshot } from './screenshot';
+import { Shaders } from './shaders';
+import { Texture } from './texture';
 import type {
   DoubleFBO,
   ExtraContext,
@@ -9,9 +12,6 @@ import type {
   RGBColor,
   TextureInfo,
 } from './types';
-import { Pointer } from './pointer';
-import { Texture } from './texture';
-import { Screenshot } from './screenshot';
 
 class Simulation {
   public simResolution = 128;

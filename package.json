@@ -29,7 +29,10 @@
     "build": "vite build",
     "dev": "vite --host",
     "lint": "prettier --write . && eslint --fix .",
-    "start": "vite serve"
+    "start": "vite serve",
+    "docs:build": "cd docs && bunx next build",
+    "docs:dev": "cd docs && bunx next dev",
+    "docs:start": "cd docs && bunx next start"
   },
   "repository": {
     "type": "git",
@@ -42,14 +45,16 @@
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/eslint": "^8.56.2",
     "@typescript-eslint/eslint-plugin": "^6.19.1",
     "@typescript-eslint/parser": "^6.19.1",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "prettier": "^3.2.4",
+    "prettier-plugin-tailwindcss": "^0.6.5",
     "semantic-release": "^23.0.0",
-    "typescript": "^5.3.3",
+    "typescript": "^5.5.3",
     "vite": "^5.3.3",
     "vite-plugin-dts": "^3.9.1"
   },
