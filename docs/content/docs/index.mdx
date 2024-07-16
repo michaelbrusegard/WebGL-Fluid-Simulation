@@ -1,193 +1,100 @@
 ---
 title: Quick Start
-description: Getting Started with Fumadocs
+description: Getting Started with WebGL Fluid Enhanced
 icon: Play
 ---
 
 ## Introduction
 
-Fumadocs can be broken down into two parts: Core and UI.
+I wanted to incorporate Pavel Dobryakov's [WebGL Fluid Simulation](https://github.com/PavelDoGreat/WebGL-Fluid-Simulation) into my [personal website](https://www.michaelbrusegard.com), but the original project did not provide the tools for it. Hence, I decided to enhance the original project by:
 
-**Core** handles most of the logic, from search functionality, to MDX plugins.
+- Introducing new cool features
+- Adding ES Module support
+- Providing a minified build for optimized performance
+- Eliminating unnecessary boilerplate UI
+- Restructuring the code into classes and enforcing strict TypeScript rules for an improved developer experience
 
-**Fumadocs UI** is the official user interface for Fumadocs.
+## Installation
 
-### Terminology
+Scaffold a website with your chosen framework (Next.js, Angular, Vue, etc.).
 
-For a better understanding of the docs, there are some common terminologies you should know:
-
-**Content Source:** The source of your content. Fumadocs MDX, CMS and Contentlayer are examples of content source.
-
-**Page Tree:** A tree of all the pages, separators and folders. It is essential for navigation elements. See [Page Tree](/docs/headless/page-tree).
-
-**MDX File & Page:** A MDX file could be located in a folder, or available remotely. Instead, MDX Page is only referring to `page.mdx`, which is already a page on its own.
-
-You might need to be familiar with Next.js App Router to continue.
-
-## Automatic Installation
-
-Create a new app with `create-fumadocs-app`, it requires Node.js 18+.
+Install the package from the npm registry using your package manager of choice.
 
 <Tabs id='package-manager' persist items={['npm', 'pnpm', 'yarn', 'bun']}>
 
 ```bash tab="npm"
-npx create-fumadocs-app
+npm install webgl-fluid-enhanced
 ```
 
 ```bash tab="pnpm"
-pnpm create fumadocs-app
+pnpm install webgl-fluid-enhanced
 ```
 
 ```bash tab="yarn"
-yarn create fumadocs-app
+yarn add webgl-fluid-enhanced
 ```
 
 ```bash tab="bun"
-bun create fumadocs-app
+bun add webgl-fluid-enhanced
 ```
 
 </Tabs>
 
-It will ask you the following questions:
+For a simple HTML website you can load the script [directly](/docs/frameworks#html).
 
-- Which content source to use? (Recommended: Fumadocs MDX)
-- Configure Tailwind CSS?
-- Install dependencies?
+## Initialization
 
-After that, it will initialize a new fumadocs app.
-Now you can start hacking!
+To initialize the WebGL Fluid Simulation, import the `WebGLFluidEnhanced` class and create a new instance.
+```javascript
+import WebGLFluidEnhanced from 'webgl-fluid-enhanced';
 
-### Enjoy!
-
-Create your first mdx file in the docs folder.
-
-```mdx title="content/docs/index.mdx"
----
-title: Hello World
----
-
-## Yo what's up
+const simulation = new WebGLFluidEnhanced();
 ```
 
-Run the app in development mode and see http://localhost:3000/docs.
+You can pass an optional container element to the constructor to render the simulation inside it:
 
+```javascript
+const container = document.querySelector('div')
+
+const simulation = new WebGLFluidEnhanced(container)
+```
+
+If not provided, the simulation will be rendered in the body element.
+
+## Start & Stop
+
+To start the simulation, call the `start` method on the instance.
+```javascript
+simulation.start();
+```
+
+And to stop the simulation, call the `stop` method.
+```javascript
+simulation.stop();
+```
+
+<Callout type="warn">
+  Call `stop` before removing the simulation from the DOM to avoid memory leaks.
+</Callout>
 
 ## FAQ
 
 Some common questions you may encounter.
 
 <Accordions>
-    <Accordion id='why-fumadocs-ui' title="Why Fumadocs UI?">
+  <Accordion id='which-new-features' title="Which new features are provided?">
+    WebGL Fluid Enhanced provides many new features outside of Typescript and ES Module support. Some of the new features include:
 
-        Feel free to open the demo in CodeSandbox and see if it suits you.
+      - Changing configuration options on the fly
+      - Trigger splats
+      - Splat a specific location
+      - Using hover to activate
+      - Brightness option
+      - Pause/resume simulation
+      - Custom color palette
+      - Invert colors option
+      - Set custom background image/color
 
-        - Many built-in components
-        - Integrations with Typescript Twoslash, OpenAPI, Math
-        - Flexible and Fast by default
-        - Built on App Router
-        - Use it in an existing Next.js project, without refactoring anything.
-    </Accordion>
-    <Accordion id='customise' title='How to Customise UI?'>
-
-        Fumadocs UI offers Themes, Blocks and Components.
-
-        The design system is built with Tailwind CSS, see [Themes](/docs/ui/theme).
-
-        Components are pre-built elements to enhance your documentation,
-        they are customisable with exposed props like `style` and `className`.
-
-        Blocks are essential elements of docs, providing navigation and basic functionality.
-        We provided many options to customise them, see the **Blocks** section of the docs.
-
-        Although the docs didn't explicitly mention, you can always style the elements with CSS selectors.
-
-    </Accordion>
-    <Accordion id='fix-monorepo-styling' title="How to fix stylings not being applied in Monorepo?">
-
-        Sometimes, `fumadocs-ui` is not installed in the workspace of your Tailwind CSS configuration file. (e.g. a monorepo setup).
-
-        When using the official Tailwind CSS plugin, it will not be able to find the files from `fumadocs-ui`
-        package which contains all styling.
-
-        To fix this, edit the Tailwind CSS configuration and replace `./node_modules` with `../../node_modules` in the `content` section.
-
-        ```diff
-        export default {
-          content: [
-        -   './node_modules/fumadocs-ui/dist/**/*.js',
-        +   '../../node_modules/fumadocs-ui/dist/**/*.js',
-            './components/**/*.{ts,tsx}',
-            ...
-          ],
-        }
-        ```
-
-    </Accordion>
-    <Accordion id='fix-dot-map-error' title="How to fix '@/.map' error?">
-
-        If you are using Fumadocs MDX, the `.map.ts` file will be generated automatically once you start the dev server.
-
-        For more information, see [Setup Guide](/docs/mdx).
-
-    </Accordion>
-    <Accordion id='dynamic-route' title="It uses Dynamic Route, will it be poor in performance?">
-
-        Next.js turns dynamic route into static routes when `generateStaticParams` is configured.
-        Hence, it is as fast as static pages.
-
-    </Accordion>
-    <Accordion id='blog-usage' title="Can I use it for Blog?">
-
-        The answer is yes.
-
-        Fumadocs is built for documentation sites, yet, it is very flexible.
-        You can re-use the typography styles and leverage its built-in remark/rehype plugins.
-        Check our [blog](/blog), it is also built with Fumadocs.
-
-    </Accordion>
-    <Accordion id='pronunciation' title='How to say Fumadocs?'>
-        Fumadocs (Foo-ma docs).
-    </Accordion>
-
+  </Accordion>
 </Accordions>
 
-## Learn More
-
-New to here? Don't worry, we are welcome for your questions.
-
-If you find anything confusing, please give your feedback on [Github Discussion](https://github.com/fuma-nama/fumadocs/discussions)!
-
-<Cards>
-  <Card
-    href="/docs/ui/page-conventions"
-    title="Organizing Pages"
-    description="Learn how to organize your pages"
-  />
-  <Card
-    href="/docs/ui/internationalization"
-    title="Learn I18n"
-    description="Learn how to implement I18n"
-  />
-  <Card
-    href="/docs/ui/theme"
-    title="Theming"
-    description="Add themes to Fumadocs UI"
-  />
-  <Card
-    href="/docs/ui/markdown"
-    title="Markdown"
-    description="Learn how to write documents in Fumadocs"
-  />
-</Cards>
-
-### From Existing Codebase?
-
-You can follow the Manual Installation guide to get started.
-
-<Cards>
-  <Card
-    href="/docs/ui/manual-installation"
-    title="Manual Installation"
-    description="Create fumadocs app from scratch"
-  />
-</Cards>

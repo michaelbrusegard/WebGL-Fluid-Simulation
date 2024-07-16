@@ -1,5 +1,46 @@
 ---
-title: Background
+title: Custom Background
 description: Set a custom background image or color
 icon: Wallpaper
 ---
+
+## Background Image
+
+Set the background image using CSS on the container element.
+
+```javascript
+const container = document.querySelector('div');
+
+container.style.backgroundImage = 'url("https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg")';
+
+// Optional CSS properties
+container.style.backgroundSize = 'cover';
+container.style.backgroundPosition = 'center';
+container.style.backgroundRepeat = 'no-repeat';
+
+const simulation = new Simulation(container);
+```
+
+<Callout type="info">
+Alternatively, you can position an absolute element behind the container
+</Callout>
+
+<Callout type="warn">
+  Remember to give the container a width and height
+</Callout>
+
+## Config
+
+To set a custom background, enable the transparent option.
+
+```javascript
+simulation.setConfig({
+  transparent: true,
+});
+```
+
+
+Then start the simulation.
+```javascript
+simulation.start();
+```

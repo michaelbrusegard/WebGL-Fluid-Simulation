@@ -61,7 +61,7 @@ type ConfigOptions = {
   colorUpdateSpeed: number;
   colorPalette: string[];
   hover: boolean;
-  backColor: string;
+  backgroundColor: string;
   inverted: boolean;
   transparent: boolean;
   brightness: number;

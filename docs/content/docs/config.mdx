@@ -2,3 +2,179 @@
 title: Config
 description: Set configuration options for the simulation
 ---
+
+## Usage
+
+To set configuration options for the simulation, you can pass an object with the desired options to the `setConfig` method.
+```javascript
+simulation.setConfig({
+  colorPalette: ['#cc211b', '#f1c593', '#e87e54', '#f193a7', '#ec6fa9'],
+  backgroundColor: '#020202',
+  densityDissipation: 3,
+  colorUpdateSpeed: 5,
+  hover: false,
+  brightness: 0.6,
+  velocityDissipation: 0.5,
+  bloom: false,
+});
+```
+
+<Callout type="info">
+  All colors are hex strings
+</Callout>
+
+Run `setConfig()` before starting the simulation `simulation.start()` to make sure that the configuration is applied before the simulation starts.
+
+<Callout type="info">
+  `setConfig()` can be called during the simulation
+</Callout>
+
+### Object Type
+
+<TypeTable
+  type={{
+    simResolution: {
+      description: 'Resolution of the simulation grid',
+      type: 'number',
+      default: 128,
+    },
+    dyeResolution: {
+      description: 'Resolution of the dye',
+      type: 'number',
+      default: 1024,
+    },
+    captureResolution: {
+      description: 'Resolution of the captured frames',
+      type: 'number',
+      default: 512,
+    },
+    densityDissipation: {
+      description: 'Rate at which density dissipates',
+      type: 'number',
+      default: 1,
+    },
+    velocityDissipation: {
+      description: 'Rate at which velocity dissipates',
+      type: 'number',
+      default: 0.2,
+    },
+    pressure: {
+      description: 'Pressure value used in the simulation',
+      type: 'number',
+      default: 0.8,
+    },
+    pressureIterations: {
+      description: 'Number of pressure iterations',
+      type: 'number',
+      default: 20,
+    },
+    curl: {
+      description: 'Curl value used in the simulation',
+      type: 'number',
+      default: 30,
+    },
+    splatRadius: {
+      description: 'Radius of the splats',
+      type: 'number',
+      default: 0.25,
+    },
+    splatForce: {
+      type: 'number',
+      default: 6000,
+    },
+    shading: {
+      description: 'Enables shading in the visualization',
+      type: 'boolean',
+      default: 'true',
+    },
+    colorful: {
+      description: 'Enables rapid changing of colors',
+      type: 'boolean',
+      default: 'true',
+    },
+    colorUpdateSpeed: {
+      description: 'Speed of color update',
+      type: 'number',
+      default: 10,
+    },
+    colorPalette: {
+      description: 'Custom color palette',
+      type: 'array',
+      default: '[]',
+    },
+    hover: {
+      description: 'Enables interaction on hover',
+      type: 'boolean',
+      default: 'true',
+    },
+    backgroundColor: {
+      description: 'Background color of the canvas',
+      type: 'string',
+      default: '#000000',
+    },
+    transparent: {
+      description: 'Makes the canvas transparent if true',
+      type: 'boolean',
+      default: 'false',
+    },
+    brightness: {
+      description: 'Color brightness (Recommended lower than 1.0 if BLOOM is enabled)',
+      type: 'number',
+      default: 0.5,
+    },
+    bloom: {
+      description: 'Enables bloom effect',
+      type: 'boolean',
+      default: 'true',
+    },
+    bloomIterations: {
+      description: 'Number of bloom effect iterations',
+      type: 'number',
+      default: 8,
+    },
+    bloomResolution: {
+      description: 'Resolution of the bloom effect',
+      type: 'number',
+      default: 256,
+    },
+    bloomIntensity: {
+      description: 'Intensity of the bloom effect',
+      type: 'number',
+      default: 0.8,
+    },
+    bloomThreshold: {
+      description: 'Threshold for the bloom effect',
+      type: 'number',
+      default: 0.6,
+    },
+    bloomSoftKnee: {
+      description: 'Soft knee value for the bloom effect',
+      type: 'number',
+      default: 0.7,
+    },
+    sunrays: {
+      description: 'Enables sunrays effect',
+      type: 'boolean',
+      default: 'true',
+    },
+    sunraysResolution: {
+      description: 'Resolution of the sunrays effect',
+      type: 'number',
+      default: 196,
+    },
+    sunraysWeight: {
+      description: 'Weight of the sunrays effect',
+      type: 'number',
+      default: 1.0,
+    },
+  }}
+/>
+
+<Callout title="Mobile" type="info">
+  If the simulation is running on a mobile device, the `dyeResolution` will be set to `512`.
+</Callout>
+
+<Callout title="Linear Filtering" type="warn">
+  If the browser does not support linear filtering, the `dyeResolution` will be set to `512` and the `shading`, `bloom`, and `sunrays` will be disabled.
+</Callout>
+

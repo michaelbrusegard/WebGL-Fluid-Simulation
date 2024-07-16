@@ -3,3 +3,169 @@ title: Frameworks & Libraries
 description: How to use with different frameworks and libraries
 icon: Library
 ---
+
+<Callout type="info">
+    All examples below are passing a div element to the optional `container` prop in the constructor. This is not required
+</Callout>
+
+<Callout type="warn">
+    The element passed must have a width and height set for it to be visible
+</Callout>
+
+## HTML
+
+```html title="index.html"
+<!doctype html>
+<html>
+  <body>
+    <div style="width: 100vw; height: 100vh;"></div>
+    <script type="importmap">
+      {
+        "imports": {
+          "webgl-fluid-enhanced": "https://esm.run/webgl-fluid-enhanced@latest"
+        }
+      }
+    </script>
+    <script type="module">
+      import WebGLFluidEnhanced from 'webgl-fluid-simulation';
+
+      const simulation = new WebGLFluidEnhanced(containerRef.current);
+      simulation.start();
+
+      window.addEventListener('beforeunload', () => {
+        simulation.stop();
+      });
+    </script>
+  </body>
+</html>
+```
+
+## React
+
+```tsx title="Simulation.tsx"
+import { useEffect, useRef } from 'react';
+import WebGLFluidEnhanced from 'webgl-fluid-enhanced';
+
+function Simulation() {
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const simulation = new WebGLFluidEnhanced(containerRef.current);
+    simulation.start();
+
+    return () => {
+      simulation.stop();
+    };
+  }, []);
+
+  return <div ref={containerRef} style={{ width: '100vw', height: '100vh' }} />;
+};
+
+export { Simulation };
+```
+
+<Callout type="warn">
+    When using Next.js make sure to include `'use client';` at the top of the file
+</Callout>
+
+## Vue
+
+```vue title="Simulation.vue"
+<template>
+  <div ref="container" style="width: 100vw; height: 100vh;"></div>
+</template>
+
+<script>
+import WebGLFluidEnhanced from 'webgl-fluid-enhanced';
+
+const Simulation = {
+  name: 'Simulation',
+  mounted() {
+    this.simulation = new WebGLFluidEnhanced(this.$refs.container);
+    this.simulation.start();
+  },
+  beforeDestroy() {
+    this.simulation.stop();
+  },
+};
+
+export { Simulation };
+</script>
+```
+
+## Angular
+
+```ts title="simulation.component.ts"
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import WebGLFluidEnhanced from 'webgl-fluid-enhanced';
+
+@Component({
+  selector: 'app-simulation',
+  template: `<div #container style="width: 100vw; height: 100vh;"></div>`,
+})
+class SimulationComponent implements OnInit {
+  @ViewChild('container') container: ElementRef;
+  simulation: WebGLFluidEnhanced;
+
+  ngOnInit() {
+    this.simulation = new WebGLFluidEnhanced(this.container.nativeElement);
+    this.simulation.start();
+  }
+
+  ngOnDestroy() {
+    this.simulation.stop();
+  }
+}
+
+export { SimulationComponent };
+```
+
+## Svelte
+
+```svelte title="Simulation.svelte"
+<script>
+  import { onMount, onDestroy } from 'svelte';
+  import WebGLFluidEnhanced from 'webgl-fluid-enhanced';
+
+  let container: HTMLDivElement;
+  let simulation: WebGLFluidEnhanced;
+
+  onMount(() => {
+    simulation = new WebGLFluidEnhanced(container);
+    simulation.start();
+  });
+
+  onDestroy(() => {
+    simulation.stop();
+  });
+</script>
+
+<div bind:this={container} style="width: 100vw; height: 100vh;"></div>
+```
+
+## Solid
+
+```tsx title="Simulation.tsx"
+import { createSignal, onCleanup } from 'solid-js';
+import WebGLFluidEnhanced from 'webgl-fluid-enhanced';
+
+function Simulation() {
+  let container: HTMLDivElement;
+  let simulation: WebGLFluidEnhanced;
+
+  createSignal(() => {
+    simulation = new WebGLFluidEnhanced(container);
+    simulation.start();
+
+    onCleanup(() => {
+      simulation.stop();
+    });
+  });
+
+  return (
+    <div ref={container} style="width: 100vw; height: 100vh;"></div>
+  );
+}
+
+export { Simulation };
+```

@@ -43,9 +43,7 @@ export const baseOptions: BaseLayoutProps = {
     title: (
       <>
         <Icon />
-        <span className="font-medium max-md:[header_&]:hidden">
-          WebGL Fluid Enhanced
-        </span>
+        <span className="font-medium">WebGL Fluid Enhanced</span>
       </>
     ),
     transparentMode: 'top',

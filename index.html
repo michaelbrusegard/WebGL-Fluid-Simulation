@@ -9,7 +9,28 @@
     <script type="module">
       import WebGLFluidEnhanced from 'webgl-fluid-enhanced';
 
-      const webGLFluidEnhanced = new WebGLFluidEnhanced();
+      const simulation = new WebGLFluidEnhanced();
+
+      simulation.setConfig({
+        colorPalette: ['#cc211b', '#f1c593', '#e87e54', '#f193a7', '#ec6fa9'],
+        densityDissipation: 3,
+        colorUpdateSpeed: 5,
+        hover: false,
+        brightness: 0.6,
+        velocityDissipation: 0.5,
+        bloom: false,
+      });
+
+      simulation.start();
+
+      window.addEventListener('keydown', function (event) {
+        if (event.code === 'Space') {
+          const dx = 1000 * (Math.random() - 0.5);
+          const dy = 1000 * (Math.random() - 0.5);
+          //simulation.splatAtLocation(500, 500, dx, dy);
+          simulation.multipleSplats(1);
+        }
+      });
     </script>
   </body>
 </html>

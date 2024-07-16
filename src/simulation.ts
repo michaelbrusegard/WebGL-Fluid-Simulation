@@ -14,6 +14,7 @@ import type {
 } from './types';
 
 class Simulation {
+  public hasStarted = false;
   public simResolution = 128;
   public dyeResolution = 1024;
   public captureResolution = 512;
@@ -29,7 +30,7 @@ class Simulation {
   public colorUpdateSpeed = 10;
   public colorPalette: string[] = [];
   public hover = true;
-  public backColor = '#000000';
+  public backgroundColor = '#000000';
   public transparent = false;
   public brightness = 0.5;
   public bloom = true;
@@ -44,7 +45,7 @@ class Simulation {
   public paused = false;
   public drawWhilePaused = false;
   private _inverted = false;
-  private canvas: HTMLCanvasElement;
+  public canvas: HTMLCanvasElement;
   private gl: WebGL2RenderingContext;
   private ext: ExtraContext;
   private splatStack: number[] = [];
@@ -63,6 +64,7 @@ class Simulation {
   private _bloom!: FBO;
   private _sunrays!: FBO;
   private _sunraysTemp!: FBO;
+  private animationFrameID!: number;
 
   constructor(container: HTMLElement) {
     this.canvas = document.createElement('canvas');
@@ -73,7 +75,6 @@ class Simulation {
 
     this.inverted = false;
 
-    this.pointers.push(new Pointer(this.colorPalette, this.brightness));
     const { gl, ext } = this.getWebGLContext();
     this.gl = gl;
     this.ext = ext;
@@ -102,92 +103,119 @@ class Simulation {
       this.gl,
     );
 
+    this.update = this.update.bind(this);
+  }
+
+  public start() {
+    this.pointers.push(new Pointer(this.colorPalette, this.brightness));
+
     this.updateKeywords();
     this.initFramebuffers();
 
-    this.update = this.update.bind(this);
     this.update();
 
-    this.canvas.addEventListener('mousedown', (event: MouseEvent) => {
-      const posX = this.scaleByPixelRatio(event.offsetX);
-      const posY = this.scaleByPixelRatio(event.offsetY);
-      let pointer = this.pointers.find((p) => p.id == -1);
-      if (!pointer) {
-        pointer = new Pointer(this.colorPalette, this.brightness);
-      }
-      pointer.updatePointerDownData(
-        -1,
+    this.canvas.addEventListener('mousedown', this.handleMouseDown);
+    this.canvas.addEventListener('mousemove', this.handleMouseMove);
+    window.addEventListener('mouseup', this.handleMouseUp);
+    this.canvas.addEventListener('touchstart', this.handleTouchStart, {
+      passive: false,
+      capture: true,
+    });
+    this.canvas.addEventListener('touchmove', this.handleTouchMove, {
+      passive: false,
+      capture: true,
+    });
+    window.addEventListener('touchend', this.handleTouchEnd);
+
+    this.hasStarted = true;
+  }
+
+  public stop() {
+    this.pointers = [];
+
+    cancelAnimationFrame(this.animationFrameID);
+
+    this.canvas.removeEventListener('mousedown', this.handleMouseDown);
+    this.canvas.removeEventListener('mousemove', this.handleMouseMove);
+    window.removeEventListener('mouseup', this.handleMouseUp);
+    this.canvas.removeEventListener('touchstart', this.handleTouchStart);
+    this.canvas.removeEventListener('touchmove', this.handleTouchMove);
+    window.removeEventListener('touchend', this.handleTouchEnd);
+
+    this.hasStarted = false;
+  }
+
+  private handleMouseDown = (event: MouseEvent) => {
+    const posX = this.scaleByPixelRatio(event.offsetX);
+    const posY = this.scaleByPixelRatio(event.offsetY);
+    let pointer = this.pointers.find((p) => p.id == -1);
+    if (!pointer) {
+      pointer = new Pointer(this.colorPalette, this.brightness);
+    }
+    pointer.updatePointerDownData(
+      -1,
+      posX,
+      posY,
+      this.canvas,
+      this.colorPalette,
+      this.brightness,
+    );
+  };
+
+  private handleMouseMove = (event: MouseEvent) => {
+    const posX = this.scaleByPixelRatio(event.offsetX);
+    const posY = this.scaleByPixelRatio(event.offsetY);
+    let pointer = this.pointers.find((p) => p.id == -1);
+    if (!pointer) {
+      pointer = new Pointer(this.colorPalette, this.brightness);
+    }
+    pointer.updatePointerMoveData(posX, posY, this.canvas, this.hover);
+  };
+
+  private handleMouseUp = () => {
+    if (!this.hover) {
+      this.pointers[0]!.updatePointerUpData();
+    }
+  };
+
+  private handleTouchStart = (event: TouchEvent) => {
+    const touches = event.targetTouches;
+    while (touches.length >= this.pointers.length)
+      this.pointers.push(new Pointer(this.colorPalette, this.brightness));
+    for (let i = 0; i < touches.length; i++) {
+      const posX = this.scaleByPixelRatio(touches[i]!.pageX);
+      const posY = this.scaleByPixelRatio(touches[i]!.pageY);
+      this.pointers[i + 1]!.updatePointerDownData(
+        touches[i]!.identifier,
         posX,
         posY,
         this.canvas,
         this.colorPalette,
         this.brightness,
       );
-    });
+    }
+  };
 
-    this.canvas.addEventListener('mousemove', (event: MouseEvent) => {
-      const posX = this.scaleByPixelRatio(event.offsetX);
-      const posY = this.scaleByPixelRatio(event.offsetY);
-      let pointer = this.pointers.find((p) => p.id == -1);
-      if (!pointer) {
-        pointer = new Pointer(this.colorPalette, this.brightness);
-      }
+  private handleTouchMove = (event: TouchEvent) => {
+    const touches = event.targetTouches;
+    for (let i = 0; i < touches.length; i++) {
+      const pointer = this.pointers[i + 1]!;
+      const posX = this.scaleByPixelRatio(touches[i]!.pageX);
+      const posY = this.scaleByPixelRatio(touches[i]!.pageY);
       pointer.updatePointerMoveData(posX, posY, this.canvas, this.hover);
-    });
+    }
+  };
 
-    window.addEventListener('mouseup', () => {
-      if (!this.hover) {
-        this.pointers[0]!.updatePointerUpData();
-      }
-    });
-
-    this.canvas.addEventListener(
-      'touchstart',
-      (event: TouchEvent) => {
-        const touches = event.targetTouches;
-        while (touches.length >= this.pointers.length)
-          this.pointers.push(new Pointer(this.colorPalette, this.brightness));
-        for (let i = 0; i < touches.length; i++) {
-          const posX = this.scaleByPixelRatio(touches[i]!.pageX);
-          const posY = this.scaleByPixelRatio(touches[i]!.pageY);
-          this.pointers[i + 1]!.updatePointerDownData(
-            touches[i]!.identifier,
-            posX,
-            posY,
-            this.canvas,
-            this.colorPalette,
-            this.brightness,
-          );
-        }
-      },
-      { passive: false, capture: true },
-    );
-
-    this.canvas.addEventListener(
-      'touchmove',
-      (event: TouchEvent) => {
-        const touches = event.targetTouches;
-        for (let i = 0; i < touches.length; i++) {
-          const pointer = this.pointers[i + 1]!;
-          const posX = this.scaleByPixelRatio(touches[i]!.pageX);
-          const posY = this.scaleByPixelRatio(touches[i]!.pageY);
-          pointer.updatePointerMoveData(posX, posY, this.canvas, this.hover);
-        }
-      },
-      { passive: false, capture: true },
-    );
-
-    window.addEventListener('touchend', (event: TouchEvent) => {
-      const touches = event.changedTouches;
-      for (const touch of touches) {
-        const pointer = this.pointers.find(
-          (pointer) => pointer.id === touch.identifier,
-        );
-        if (!pointer) continue;
-        pointer.updatePointerUpData();
-      }
-    });
-  }
+  private handleTouchEnd = (event: TouchEvent) => {
+    const touches = event.changedTouches;
+    for (const touch of touches) {
+      const pointer = this.pointers.find(
+        (pointer) => pointer.id === touch.identifier,
+      );
+      if (!pointer) continue;
+      pointer.updatePointerUpData();
+    }
+  };
 
   private scaleByPixelRatio(input: number): number {
     const pixelRatio = window.devicePixelRatio || 1;
@@ -792,7 +820,7 @@ class Simulation {
 
     // This is bound in the constructor, so it's safe to call here
     // eslint-disable-next-line
-    requestAnimationFrame(this.update);
+    this.animationFrameID = requestAnimationFrame(this.update);
   }
 
   private calcDeltaTime(): number {
@@ -1002,7 +1030,7 @@ class Simulation {
     if (!this.transparent)
       this.drawColor(
         target,
-        Color.normalizeColor(Color.HEXtoRGB(this.backColor)),
+        Color.normalizeColor(Color.HEXtoRGB(this.backgroundColor)),
       );
     this.drawDisplay(target);
   }

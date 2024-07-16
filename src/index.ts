@@ -16,12 +16,26 @@ class WebGLFluidEnhanced {
     this.simulation = new Simulation(container);
   }
 
-  public pause(drawWhilePaused = false) {
+  public start() {
+    if (this.simulation.hasStarted) return;
+    this.simulation.start();
+  }
+
+  public stop() {
+    if (!this.simulation.hasStarted) return;
+    this.simulation.stop();
+  }
+
+  public togglePause(drawWhilePaused = false) {
+    if (!this.simulation.hasStarted) return;
     this.simulation.paused = !this.simulation.paused;
-    this.simulation.drawWhilePaused = drawWhilePaused;
+    if (this.simulation.paused) {
+      this.simulation.drawWhilePaused = drawWhilePaused;
+    }
   }
 
   public multipleSplats(amount: number) {
+    if (!this.simulation.hasStarted) return;
     this.simulation.multipleSplats(amount);
   }
 
@@ -32,117 +46,132 @@ class WebGLFluidEnhanced {
     dy: number,
     HEXColor?: string,
   ) {
+    if (!this.simulation.hasStarted) return;
+
+    const normalizedX = x / this.simulation.canvas.width;
+    const normalizedY = 1.0 - y / this.simulation.canvas.clientHeight;
+
     let color = HEXColor ? Color.HEXtoRGB(HEXColor) : undefined;
 
-    if (color) {
-      color.r *= 0.15;
-      color.g *= 0.15;
-      color.b *= 0.15;
-    } else {
+    if (!color) {
       color = Color.generateColor(
         this.simulation.colorPalette,
         this.simulation.brightness,
       );
     }
 
-    this.simulation.splat(x, y, dx, dy, color);
+    color.r *= 10.0;
+    color.g *= 10.0;
+    color.b *= 10.0;
+
+    this.simulation.splat(normalizedX, normalizedY, dx, dy, color);
   }
 
   public downloadScreenshot() {
+    if (!this.simulation.hasStarted) return;
     this.simulation.captureScreenshot();
   }
 
   public setConfig(config: Config) {
-    if (config.simResolution) {
+    if (config.simResolution !== undefined) {
       this.simulation.simResolution = config.simResolution;
     }
-    if (config.dyeResolution) {
+    if (config.dyeResolution !== undefined) {
       this.simulation.dyeResolution = config.dyeResolution;
     }
-    if (config.captureResolution) {
+    if (config.captureResolution !== undefined) {
       this.simulation.captureResolution = config.captureResolution;
     }
-    if (config.densityDissipation) {
+    if (config.densityDissipation !== undefined) {
       this.simulation.densityDissipation = config.densityDissipation;
     }
-    if (config.velocityDissipation) {
+    if (config.velocityDissipation !== undefined) {
       this.simulation.velocityDissipation = config.velocityDissipation;
     }
-    if (config.pressure) {
+    if (config.pressure !== undefined) {
       this.simulation.pressure = config.pressure;
     }
-    if (config.pressureIterations) {
+    if (config.pressureIterations !== undefined) {
       this.simulation.pressureIterations = config.pressureIterations;
     }
-    if (config.curl) {
+    if (config.curl !== undefined) {
       this.simulation.curl = config.curl;
     }
-    if (config.splatRadius) {
+    if (config.splatRadius !== undefined) {
       this.simulation.splatRadius = config.splatRadius;
     }
-    if (config.splatForce) {
+    if (config.splatForce !== undefined) {
       this.simulation.splatForce = config.splatForce;
     }
-    if (config.shading) {
+    if (config.shading !== undefined) {
       this.simulation.shading = config.shading;
     }
-    if (config.colorful) {
+    if (config.colorful !== undefined) {
       this.simulation.colorful = config.colorful;
     }
-    if (config.colorUpdateSpeed) {
+    if (config.colorUpdateSpeed !== undefined) {
       this.simulation.colorUpdateSpeed = config.colorUpdateSpeed;
     }
-    if (config.colorPalette) {
+    if (config.colorPalette !== undefined) {
       this.simulation.colorPalette = config.colorPalette;
     }
-    if (config.hover) {
+    if (config.hover !== undefined) {
       this.simulation.hover = config.hover;
     }
-    if (config.backColor) {
-      this.simulation.backColor = config.backColor;
+    if (config.backgroundColor !== undefined) {
+      this.simulation.backgroundColor = config.backgroundColor;
     }
-    if (config.inverted) {
+    if (config.inverted !== undefined) {
       this.simulation.inverted = config.inverted;
     }
-    if (config.transparent) {
+    if (config.transparent !== undefined) {
       this.simulation.transparent = config.transparent;
     }
-    if (config.brightness) {
+    if (config.brightness !== undefined) {
       this.simulation.brightness = config.brightness;
     }
-    if (config.bloom) {
+    if (config.bloom !== undefined) {
       this.simulation.bloom = config.bloom;
     }
-    if (config.bloomIterations) {
+    if (config.bloomIterations !== undefined) {
       this.simulation.bloomIterations = config.bloomIterations;
     }
-    if (config.bloomResolution) {
+    if (config.bloomResolution !== undefined) {
       this.simulation.bloomResolution = config.bloomResolution;
     }
-    if (config.bloomIntensity) {
+    if (config.bloomIntensity !== undefined) {
       this.simulation.bloomIntensity = config.bloomIntensity;
     }
-    if (config.bloomThreshold) {
+    if (config.bloomThreshold !== undefined) {
       this.simulation.bloomThreshold = config.bloomThreshold;
     }
-    if (config.bloomSoftKnee) {
+    if (config.bloomSoftKnee !== undefined) {
       this.simulation.bloomSoftKnee = config.bloomSoftKnee;
     }
-    if (config.sunrays) {
+    if (config.sunrays !== undefined) {
       this.simulation.sunrays = config.sunrays;
     }
-    if (config.sunraysResolution) {
+    if (config.sunraysResolution !== undefined) {
       this.simulation.sunraysResolution = config.sunraysResolution;
     }
-    if (config.sunraysWeight) {
+    if (config.sunraysWeight !== undefined) {
       this.simulation.sunraysWeight = config.sunraysWeight;
     }
 
-    if (config.dyeResolution ?? config.simResolution) {
+    if (!this.simulation.hasStarted) return;
+
+    if (
+      config.dyeResolution !== undefined ??
+      config.simResolution !== undefined
+    ) {
       this.simulation.initFramebuffers();
     }
 
-    if (config.shading ?? config.bloom ?? config.sunrays) {
+    if (
+      config.shading !== undefined ??
+      config.bloom !== undefined ??
+      config.sunrays !== undefined
+    ) {
       this.simulation.updateKeywords();
     }
   }

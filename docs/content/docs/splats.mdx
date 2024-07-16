@@ -2,3 +2,94 @@
 title: Splats
 description: Triggering splats
 ---
+
+## Usage
+
+To trigger multiple random splats accross the canvas call the `multipleSplats` method. It has an optional `amount` property to set how many splats to trigger.
+
+```javascript
+simulation.multipleSplats(5)
+```
+
+This will spawn 5 random splats on the canvas.
+
+### Specific location
+
+To splat at a specific location you can call the `splatAtLocation` method. Where `x` and `y` are the coordinates in the HTML element where the splat should occur, and `dx` and `dy` represent the directional components of the splat's force.
+
+```javascript
+const x = container.clientWidth / 2;
+const y = container.clientHeight / 2;
+const dx = 0;
+const dy = 100;
+
+simulation.splatAtLocation(x, y, dx, dy)
+```
+
+This will splat at the center of the canvas with a force of 100 upwards.
+
+<Callout type="info">
+  The `dx` and `dy` values are best in the range from -500 to 500, with 0 representing no force
+</Callout>
+
+### Type Table
+
+
+<TypeTable
+  type={{
+    x: {
+      description: 'X coordinate',
+      type: 'number',
+    },
+    y: {
+      description: 'Y coordinate',
+      type: 'number',
+    },
+    dx: {
+      description: 'Directional X component',
+      type: 'boolean',
+    },
+    dy: {
+      description: 'Directional Y component',
+      type: 'number',
+    },
+    color: {
+      description: 'Hex color value',
+      type: 'number',
+      default: 'generateColor()',
+    },
+  }}
+/>
+
+<Callout type="info">
+The `color` parameter is optional. If not provided, colors from the palette or then a random color may be used.
+</Callout>
+
+## Examples
+
+Here are some examples on how you can easily replicate behaviour that was built-in in version `0.6.*` and below.
+
+### Trigger random splats when pressing space
+
+```javascript title="script.js"
+const amount = 5;
+
+window.addEventListener('keydown', function (event) {
+  if (event.code === 'Space') {
+    simulation.multipleSplats(Math.random() * amount * 4 + amount);
+  }
+});
+```
+
+### Trigger splats on initial load
+
+```javascript title="script.js"
+import WebGLFLuidEnhanced from 'webgl-fluid-enhanced';
+
+const amount = 10;
+const smulation = new WebGLFLuidEnhanced();
+
+simulation.start();
+
+simulation.multipleSplats(amount);
+```
