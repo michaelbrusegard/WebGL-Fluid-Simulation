@@ -16,5 +16,5 @@
 
 # build
 /dist/
-/docs/out/
+/docs/dist/
 /docs/.next/

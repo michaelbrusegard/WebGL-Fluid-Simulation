@@ -5,6 +5,8 @@ import { loader } from 'fumadocs-core/source';
 import { icons } from 'lucide-react';
 import { create } from '@/components/ui/icon';
 import { map } from '@/.map';
+import { BookText, Joystick } from 'lucide-react';
+import { cn } from '@/utils';
 
 const utils = loader({
   baseUrl: '/docs',
@@ -26,10 +28,10 @@ const utils = loader({
 function Icon({ className, ...props }: { className?: string }) {
   return (
     <span
-      className={
-        'flex items-center justify-center rounded-md bg-[#161b22] px-1 text-[#d5dce0] font-bold' +
-        className
-      }
+      className={cn(
+        'flex items-center justify-center rounded-md bg-[#161b22] px-1 text-[#d5dce0] font-bold',
+        className,
+      )}
       {...props}
     >
       O
@@ -50,11 +52,13 @@ export const baseOptions: BaseLayoutProps = {
   },
   links: [
     {
+      icon: <BookText />,
       text: 'Documentation',
       url: '/docs',
       active: 'nested-url',
     },
     {
+      icon: <Joystick />,
       text: 'Playground',
       url: '/play',
       active: 'nested-url',
