@@ -1620,7 +1620,7 @@ const webGLFluidEnhanced = {
 
       if (!activeConfig.TRANSPARENT)
         drawColor(target, normalizeColor(HEXtoRGB(activeConfig.BACK_COLOR)));
-      if (target == null && activeConfig.TRANSPARENT) drawCheckerboard(target);
+      //if (target == null && activeConfig.TRANSPARENT) drawCheckerboard(target);
       drawDisplay(target);
     }
 
@@ -1808,19 +1808,19 @@ const webGLFluidEnhanced = {
       return radius;
     }
 
-    canvas.addEventListener('mousedown', (e) => {
-      let posX = scaleByPixelRatio(e.offsetX);
-      let posY = scaleByPixelRatio(e.offsetY);
+    window.addEventListener('mousedown', (e) => {
+      let posX = scaleByPixelRatio(e.clientX);
+      let posY = scaleByPixelRatio(e.clientY);
       let pointer = pointers.find((p) => p.id == -1);
       if (pointer == null) pointer = new pointerPrototype();
       updatePointerDownData(pointer, -1, posX, posY);
     });
 
     setTimeout(() => {
-      canvas.addEventListener('mousemove', (e) => {
+      window.addEventListener('mousemove', (e) => {
         let pointer = pointers[0];
-        let posX = scaleByPixelRatio(e.offsetX);
-        let posY = scaleByPixelRatio(e.offsetY);
+        let posX = scaleByPixelRatio(e.clientX);
+        let posY = scaleByPixelRatio(e.clientY);
         updatePointerMoveData(pointer, posX, posY);
       });
     }, 500);
@@ -1829,15 +1829,15 @@ const webGLFluidEnhanced = {
       updatePointerUpData(pointers[0]);
     });
 
-    canvas.addEventListener(
+    window.addEventListener(
       'touchstart',
       (e) => {
         const touches = e.targetTouches;
         while (touches.length >= pointers.length)
           pointers.push(new pointerPrototype());
         for (let i = 0; i < touches.length; i++) {
-          let posX = scaleByPixelRatio(touches[i].pageX);
-          let posY = scaleByPixelRatio(touches[i].pageY);
+          let posX = scaleByPixelRatio(touches[i].clientX);
+          let posY = scaleByPixelRatio(touches[i].clientY);
           updatePointerDownData(
             pointers[i + 1],
             touches[i].identifier,
