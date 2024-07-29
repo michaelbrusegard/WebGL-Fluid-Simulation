@@ -1,5 +1,5 @@
 {
-  "name": "webgl-fluid-enhanced",
+  "name": "@open-terzo-settore/webgl-fluid-enhanced",
   "version": "0.6.1",
   "description": "WebGL Fluid Simulation for modern webpages (works even on mobile)",
   "author": "Michael Brusegard",
@@ -18,7 +18,7 @@
     }
   },
   "scripts": {
-    "build": "tsc --project tsconfig.build.json && bun build ./src/index.ts --outdir ./build --minify",
+    "build": "tsc --project tsconfig.build.json && bun build ./src/index.ts --outdir ./build --sourcemap=linked --minify ",
     "dev": "bun run --hot server.ts",
     "watch": "tsc --watch --project tsconfig.build.json --emitDeclarationOnly false",
     "lint": "eslint --ext '**/*.ts}"
