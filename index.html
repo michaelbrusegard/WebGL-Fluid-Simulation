@@ -1,21 +1,61 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  </head>
-  <body style="margin: 0; overflow: hidden">
-    <canvas style="width: 100vw; height: 100vh"></canvas>
-    <script type="importmap">
-      {
-        "imports": {
-          "webgl-fluid-enhanced": "./build/index.js"
-        }
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+      html,
+      body {
+          margin: 0;
+          padding:0;
       }
-    </script>
-    <script type="module">
-      import webGLFluidEnhanced from 'webgl-fluid-enhanced';
-      webGLFluidEnhanced.simulation(document.querySelector('canvas'));
-    </script>
-  </body>
+      body {
+          background: #79c0ff;
+      }
+      canvas {
+          width: 100vw;
+          height: 100vh;
+          position: fixed;
+      }
+
+      #cover {
+          position: relative;
+          height: 200vh;
+          width: 100%;
+          background: rgba(255, 0, 0, 0.5);
+          z-index: 1000;
+      }
+  </style>
+</head>
+<body >
+<canvas style="width: 100vw; height: 100vh"></canvas>
+
+<div style="padding: 2rem">
+<div id="cover"></div>
+</div>
+
+<script type="importmap">
+  {
+    "imports": {
+      "webgl-fluid-enhanced": "./build/index.js"
+    }
+  }
+</script>
+<script type="module">
+  import webGLFluidEnhanced from "webgl-fluid-enhanced";
+
+  webGLFluidEnhanced.simulation(document.querySelector("canvas"),
+    {
+      SPLAT_RADIUS: .1,
+      COLOR_UPDATE_SPEED: 3,
+      BLOOM: false,
+      DENSITY_DISSIPATION:3,
+      PRESSURE:0.8,
+      CURL:0,
+      INITIAL :false,
+      TRANSPARENT : true,
+      BACK_COLOR : '#0F172AFF',
+    });
+</script>
+</body>
 </html>
