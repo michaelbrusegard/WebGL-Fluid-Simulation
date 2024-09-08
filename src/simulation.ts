@@ -67,10 +67,14 @@ class Simulation {
   private animationFrameID!: number;
 
   constructor(container: HTMLElement) {
-    this.canvas = document.createElement('canvas');
+    let canvas = container.querySelector('canvas');
+    if (!canvas) {
+      canvas = document.createElement('canvas');
+      container.appendChild(canvas);
+    }
+    this.canvas = canvas;
     this.canvas.style.width = '100%';
     this.canvas.style.height = '100%';
-    container.appendChild(this.canvas);
     this.resizeCanvas();
 
     this.inverted = false;

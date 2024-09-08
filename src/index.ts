@@ -161,15 +161,15 @@ class WebGLFluidEnhanced {
     if (!this.simulation.hasStarted) return;
 
     if (
-      config.dyeResolution !== undefined ??
+      config.dyeResolution !== undefined ||
       config.simResolution !== undefined
     ) {
       this.simulation.initFramebuffers();
     }
 
     if (
-      config.shading !== undefined ??
-      config.bloom !== undefined ??
+      config.shading !== undefined ||
+      config.bloom !== undefined ||
       config.sunrays !== undefined
     ) {
       this.simulation.updateKeywords();

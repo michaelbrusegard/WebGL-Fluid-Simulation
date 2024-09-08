@@ -1,0 +1,27 @@
+name: Deploy docs
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Executing remote SSH commands using SSH key
+        uses: appleboy/ssh-action@master
+        with:
+          username: ${{ secrets.ESPRESSO_USERNAME }}
+          host: ${{ secrets.ESPRESSO_HOST }}
+          key: ${{ secrets.ESPRESSO_KEY }}
+          port: ${{ secrets.ESPRESSO_PORT }}
+          script: |
+            cd ~/WebGL-Fluid-Enhanced
+            git pull
+            bun run build
+            cd docs
+            docker compose down
+            docker compose up -d
