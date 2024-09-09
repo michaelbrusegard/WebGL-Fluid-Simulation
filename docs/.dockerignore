@@ -6,6 +6,9 @@
 /out/
 next-env.d.ts
 
+# fumadocs
+/.source/
+
 # misc
 .DS_Store
 

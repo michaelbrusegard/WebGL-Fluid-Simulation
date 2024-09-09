@@ -10,9 +10,7 @@
 *.tsbuildinfo
 
 # generated content
-/docs/.map.ts
-/docs/.contentlayer
-/docs/.content-collections
+/docs/.source/
 
 # build
 /dist/

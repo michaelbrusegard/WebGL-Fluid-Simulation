@@ -3,22 +3,28 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "fumadocs-core": "12.4.2",
-    "fumadocs-mdx": "8.2.33",
-    "fumadocs-ui": "12.4.2",
-    "next": "^14.2.4",
+    "@hookform/resolvers": "^3.9.0",
+    "@radix-ui/react-dialog": "^1.1.1",
+    "@radix-ui/react-label": "^2.1.0",
+    "fumadocs-core": "13.4.9",
+    "fumadocs-mdx": "10.0.2",
+    "fumadocs-ui": "13.4.9",
+    "lucide-react": "^0.439.0",
+    "next": "^14.2.8",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "webgl-fluid-simulation": "latest"
+    "react-hook-form": "^7.53.0",
+    "webgl-fluid-simulation": "^1.0.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/mdx": "^2.0.13",
-    "@types/node": "20.14.10",
-    "@types/react": "^18.3.3",
+    "@types/node": "22.5.4",
+    "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
-    "autoprefixer": "^10.4.19",
-    "postcss": "^8.4.39",
-    "tailwindcss": "^3.4.4",
-    "typescript": "^5.5.3"
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.45",
+    "tailwindcss": "^3.4.10",
+    "typescript": "^5.5.4"
   }
 }

@@ -12,6 +12,7 @@ export default {
   presets: [
     createPreset({
       preset: 'dusk',
+      addGlobalColors: true,
     }),
   ],
 };
