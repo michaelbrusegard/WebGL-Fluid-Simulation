@@ -16,7 +16,7 @@ const formSchema = z.object({
   shading: z.boolean().default(true),
   colorful: z.boolean().default(true),
   colorUpdateSpeed: z.number().default(10),
-  colorPalette: z.array(z.any()).default([]),
+  colorPalette: z.array(z.string()).default([]),
   hover: z.boolean().default(true),
   inverted: z.boolean().default(false),
   backgroundColor: z.string().default('#000000'),
