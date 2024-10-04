@@ -15,4 +15,14 @@ export default {
       addGlobalColors: true,
     }),
   ],
+  theme: {
+    extend: {
+      screens: {
+        xs: '480px',
+      },
+      colors: {
+        destructive: '#B22222',
+      },
+    },
+  },
 };

@@ -1,4 +1,5 @@
 import { Color } from './color';
+import { defaultConfig } from './config';
 import { Material } from './material';
 import { Pointer } from './pointer';
 import { Programs } from './programs';
@@ -15,33 +16,33 @@ import type {
 
 class Simulation {
   public hasStarted = false;
-  public simResolution = 128;
-  public dyeResolution = 1024;
-  public captureResolution = 512;
-  public densityDissipation = 1;
-  public velocityDissipation = 0.2;
-  public pressure = 0.8;
-  public pressureIterations = 20;
-  public curl = 30;
-  public splatRadius = 0.25;
-  public splatForce = 6000;
-  public shading = true;
-  public colorful = true;
-  public colorUpdateSpeed = 10;
-  public colorPalette: string[] = [];
-  public hover = true;
-  public backgroundColor = '#000000';
-  public transparent = false;
-  public brightness = 0.5;
-  public bloom = true;
-  public bloomIterations = 8;
-  public bloomResolution = 256;
-  public bloomIntensity = 0.8;
-  public bloomThreshold = 0.6;
-  public bloomSoftKnee = 0.7;
-  public sunrays = true;
-  public sunraysResolution = 196;
-  public sunraysWeight = 1.0;
+  public simResolution = defaultConfig.simResolution;
+  public dyeResolution = defaultConfig.dyeResolution;
+  public captureResolution = defaultConfig.captureResolution;
+  public densityDissipation = defaultConfig.densityDissipation;
+  public velocityDissipation = defaultConfig.velocityDissipation;
+  public pressure = defaultConfig.pressure;
+  public pressureIterations = defaultConfig.pressureIterations;
+  public curl = defaultConfig.curl;
+  public splatRadius = defaultConfig.splatRadius;
+  public splatForce = defaultConfig.splatForce;
+  public shading = defaultConfig.shading;
+  public colorful = defaultConfig.colorful;
+  public colorUpdateSpeed = defaultConfig.colorUpdateSpeed;
+  public colorPalette: string[] = defaultConfig.colorPalette;
+  public hover = defaultConfig.hover;
+  public backgroundColor = defaultConfig.backgroundColor;
+  public transparent = defaultConfig.transparent;
+  public brightness = defaultConfig.brightness;
+  public bloom = defaultConfig.bloom;
+  public bloomIterations = defaultConfig.bloomIterations;
+  public bloomResolution = defaultConfig.bloomResolution;
+  public bloomIntensity = defaultConfig.bloomIntensity;
+  public bloomThreshold = defaultConfig.bloomThreshold;
+  public bloomSoftKnee = defaultConfig.bloomSoftKnee;
+  public sunrays = defaultConfig.sunrays;
+  public sunraysResolution = defaultConfig.sunraysResolution;
+  public sunraysWeight = defaultConfig.sunraysWeight;
   public paused = false;
   public drawWhilePaused = false;
   private _inverted = false;
@@ -77,17 +78,17 @@ class Simulation {
     this.canvas.style.height = '100%';
     this.resizeCanvas();
 
-    this.inverted = false;
+    this.inverted = defaultConfig.inverted;
 
     const { gl, ext } = this.getWebGLContext();
     this.gl = gl;
     this.ext = ext;
 
     if (this.isMobile()) {
-      this.dyeResolution = 512;
+      this.dyeResolution /= 2;
     }
     if (!this.ext.supportLinearFiltering) {
-      this.dyeResolution = 512;
+      this.dyeResolution /= 2;
       this.shading = false;
       this.bloom = false;
       this.sunrays = false;

@@ -1,6 +1,6 @@
 'use client';
 
-import WebGLFluidEnhanced from '../../../../dist/index.es.js';
+import WebGLFluidEnhanced, { defaultConfig } from '../../../../dist/index.es';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -20,62 +20,179 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { formSchema } from 'lib/config';
 import { SettingsIcon } from 'lucide-react';
+import {
+  parseAsArrayOf,
+  parseAsBoolean,
+  parseAsFloat,
+  parseAsInteger,
+  parseAsString,
+  useQueryStates,
+} from 'nuqs';
 import { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import type { z } from 'zod';
+import { z } from 'zod';
 
-export default function HomePage() {
+export default function PlayPage() {
   const mainRef = useRef(null);
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: formSchema.parse({
-      simResolution: 128,
-      dyeResolution: 1024,
-      captureResolution: 512,
-      densityDissipation: 1,
-      velocityDissipation: 0.2,
-      pressure: 0.8,
-      pressureIterations: 20,
-      curl: 30,
-      splatRadius: 0.25,
-      splatForce: 6000,
-      shading: true,
-      colorful: true,
-      colorUpdateSpeed: 10,
-      colorPalette: [],
-      hover: true,
-      inverted: false,
-      backgroundColor: '#000000',
-      transparent: false,
-      brightness: 0.5,
-      bloom: true,
-      bloomIterations: 8,
-      bloomResolution: 256,
-      bloomIntensity: 0.8,
-      bloomThreshold: 0.6,
-      bloomSoftKnee: 0.7,
-      sunrays: true,
-      sunraysResolution: 196,
-      sunraysWeight: 1.0,
-    }),
+  const simulationRef = useRef<WebGLFluidEnhanced | null>(null);
+  const [config, setConfig] = useQueryStates({
+    simResolution: parseAsInteger
+      .withDefault(defaultConfig.simResolution)
+      .withOptions({ clearOnDefault: true }),
+    dyeResolution: parseAsInteger
+      .withDefault(defaultConfig.dyeResolution)
+      .withOptions({ clearOnDefault: true }),
+    captureResolution: parseAsInteger
+      .withDefault(defaultConfig.captureResolution)
+      .withOptions({ clearOnDefault: true }),
+    densityDissipation: parseAsFloat
+      .withDefault(defaultConfig.densityDissipation)
+      .withOptions({ clearOnDefault: true }),
+    velocityDissipation: parseAsFloat
+      .withDefault(defaultConfig.velocityDissipation)
+      .withOptions({ clearOnDefault: true }),
+    pressure: parseAsFloat
+      .withDefault(defaultConfig.pressure)
+      .withOptions({ clearOnDefault: true }),
+    pressureIterations: parseAsInteger
+      .withDefault(defaultConfig.pressureIterations)
+      .withOptions({ clearOnDefault: true }),
+    curl: parseAsFloat
+      .withDefault(defaultConfig.curl)
+      .withOptions({ clearOnDefault: true }),
+    splatRadius: parseAsFloat
+      .withDefault(defaultConfig.splatRadius)
+      .withOptions({ clearOnDefault: true }),
+    splatForce: parseAsInteger
+      .withDefault(defaultConfig.splatForce)
+      .withOptions({ clearOnDefault: true }),
+    shading: parseAsBoolean
+      .withDefault(defaultConfig.shading)
+      .withOptions({ clearOnDefault: true }),
+    colorful: parseAsBoolean
+      .withDefault(defaultConfig.colorful)
+      .withOptions({ clearOnDefault: true }),
+    colorUpdateSpeed: parseAsInteger
+      .withDefault(defaultConfig.colorUpdateSpeed)
+      .withOptions({ clearOnDefault: true }),
+    colorPalette: parseAsArrayOf(parseAsString)
+      .withDefault(defaultConfig.colorPalette)
+      .withOptions({ clearOnDefault: true }),
+    hover: parseAsBoolean
+      .withDefault(defaultConfig.hover)
+      .withOptions({ clearOnDefault: true }),
+    inverted: parseAsBoolean
+      .withDefault(defaultConfig.inverted)
+      .withOptions({ clearOnDefault: true }),
+    backgroundColor: parseAsString
+      .withDefault(defaultConfig.backgroundColor)
+      .withOptions({ clearOnDefault: true }),
+    transparent: parseAsBoolean
+      .withDefault(true)
+      .withOptions({ clearOnDefault: true }),
+    brightness: parseAsFloat
+      .withDefault(defaultConfig.brightness)
+      .withOptions({ clearOnDefault: true }),
+    bloom: parseAsBoolean
+      .withDefault(defaultConfig.bloom)
+      .withOptions({ clearOnDefault: true }),
+    bloomIterations: parseAsInteger
+      .withDefault(defaultConfig.bloomIterations)
+      .withOptions({ clearOnDefault: true }),
+    bloomResolution: parseAsInteger
+      .withDefault(defaultConfig.bloomResolution)
+      .withOptions({ clearOnDefault: true }),
+    bloomIntensity: parseAsFloat
+      .withDefault(defaultConfig.bloomIntensity)
+      .withOptions({ clearOnDefault: true }),
+    bloomThreshold: parseAsFloat
+      .withDefault(defaultConfig.bloomThreshold)
+      .withOptions({ clearOnDefault: true }),
+    bloomSoftKnee: parseAsFloat
+      .withDefault(defaultConfig.bloomSoftKnee)
+      .withOptions({ clearOnDefault: true }),
+    sunrays: parseAsBoolean
+      .withDefault(defaultConfig.sunrays)
+      .withOptions({ clearOnDefault: true }),
+    sunraysResolution: parseAsInteger
+      .withDefault(defaultConfig.sunraysResolution)
+      .withOptions({ clearOnDefault: true }),
+    sunraysWeight: parseAsFloat
+      .withDefault(defaultConfig.sunraysWeight)
+      .withOptions({ clearOnDefault: true }),
   });
 
+  const formSchema = z.object({
+    simResolution: z.number().default(defaultConfig.simResolution),
+    dyeResolution: z.number().default(defaultConfig.dyeResolution),
+    captureResolution: z.number().default(defaultConfig.captureResolution),
+    densityDissipation: z.number().default(defaultConfig.densityDissipation),
+    velocityDissipation: z.number().default(defaultConfig.velocityDissipation),
+    pressure: z.number().default(defaultConfig.pressure),
+    pressureIterations: z.number().default(defaultConfig.pressureIterations),
+    curl: z.number().default(defaultConfig.curl),
+    splatRadius: z.number().default(defaultConfig.splatRadius),
+    splatForce: z.number().default(defaultConfig.splatForce),
+    shading: z.boolean().default(defaultConfig.shading),
+    colorful: z.boolean().default(defaultConfig.colorful),
+    colorUpdateSpeed: z.number().default(defaultConfig.colorUpdateSpeed),
+    colorPalette: z.array(z.string()).default(defaultConfig.colorPalette),
+    hover: z.boolean().default(defaultConfig.hover),
+    inverted: z.boolean().default(defaultConfig.inverted),
+    backgroundColor: z.string().default(defaultConfig.backgroundColor),
+    transparent: z.boolean().default(true),
+    brightness: z.number().default(defaultConfig.brightness),
+    bloom: z.boolean().default(defaultConfig.bloom),
+    bloomIterations: z.number().default(defaultConfig.bloomIterations),
+    bloomResolution: z.number().default(defaultConfig.bloomResolution),
+    bloomIntensity: z.number().default(defaultConfig.bloomIntensity),
+    bloomThreshold: z.number().default(defaultConfig.bloomThreshold),
+    bloomSoftKnee: z.number().default(defaultConfig.bloomSoftKnee),
+    sunrays: z.boolean().default(defaultConfig.sunrays),
+    sunraysResolution: z.number().default(defaultConfig.sunraysResolution),
+    sunraysWeight: z.number().default(defaultConfig.sunraysWeight),
+  });
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: formSchema.safeParse({}).data,
+  });
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    await setConfig(values);
+  }
+
+  function onReset() {
+    form.reset();
+  }
+
   useEffect(() => {
+    document.body.classList.add('overflow-hidden');
     if (mainRef.current) {
-      const simulation = new WebGLFluidEnhanced(mainRef.current);
-      simulation.start();
+      simulationRef.current = new WebGLFluidEnhanced(mainRef.current);
+      simulationRef.current.setConfig(config);
+      simulationRef.current.start();
 
       return () => {
-        simulation.stop();
+        document.body.classList.remove('overflow-hidden');
+        if (simulationRef.current) {
+          simulationRef.current.stop();
+          simulationRef.current = null;
+        }
       };
     }
   }, []);
 
+  useEffect(() => {
+    if (simulationRef.current) {
+      simulationRef.current.setConfig(config);
+    }
+  }, [config]);
+
   return (
     <main
-      className='relative -mt-14 flex h-screen items-center justify-center'
+      className='relative -mt-14 flex h-full items-center justify-center bg-white dark:bg-black'
       ref={mainRef}
     >
       <div className='pointer-events-none absolute size-full max-w-7xl'>
@@ -85,37 +202,64 @@ export default function HomePage() {
               className='pointer-events-auto absolute left-2 top-16'
               variant='outline'
               size='icon'
+              aria-label='Configuration Menu'
             >
-              <SettingsIcon />
+              <SettingsIcon aria-hidden='true' />
             </Button>
           </DialogTrigger>
-          <DialogContent className='!size-[91.666667%] max-w-7xl'>
+          <DialogContent className='!size-[91.666667%] max-w-7xl overflow-auto'>
             <DialogHeader>
               <DialogTitle>Configuration</DialogTitle>
             </DialogHeader>
             <Form {...form}>
-              <form className='space-y-8'>
-                <div className='flex flex-wrap gap-8'>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className='space-y-8'
+              >
+                <div className='xs:grid-cols-2 grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-3 lg:grid-cols-4'>
                   {Object.keys(formSchema.shape).map((key) => (
                     <FormField
                       key={key}
                       control={form.control}
                       name={key as keyof z.infer<typeof formSchema>}
                       render={({ field }) => (
-                        <FormItem className='flex-grow'>
+                        <FormItem className='h-20 space-y-0'>
                           <FormLabel>{key}</FormLabel>
                           <FormControl>
                             {typeof field.value === 'boolean' ? (
                               <Checkbox
+                                className='h-10 w-full rounded-md'
                                 checked={field.value}
                                 onCheckedChange={field.onChange}
                                 onBlur={field.onBlur}
                               />
+                            ) : Array.isArray(field.value) ? (
+                              <Input
+                                value={field.value.join(',')}
+                                onChange={(e) =>
+                                  field.onChange(e.target.value.split(','))
+                                }
+                                onBlur={field.onBlur}
+                                placeholder='#ff0000,#00ff00,#0000ff'
+                                type='text'
+                              />
                             ) : (
                               <Input
                                 value={field.value}
-                                onChange={field.onChange}
+                                onChange={(e) => {
+                                  const value = e.target.value;
+                                  field.onChange(
+                                    typeof field.value === 'number'
+                                      ? parseFloat(value)
+                                      : value,
+                                  );
+                                }}
                                 onBlur={field.onBlur}
+                                type={
+                                  typeof field.value === 'number'
+                                    ? 'number'
+                                    : 'text'
+                                }
                               />
                             )}
                           </FormControl>
@@ -125,7 +269,12 @@ export default function HomePage() {
                     />
                   ))}
                 </div>
-                <Button type='submit'>Apply</Button>
+                <div className='flex items-center justify-end gap-2'>
+                  <Button type='submit'>Apply</Button>
+                  <Button type='button' variant='outline' onClick={onReset}>
+                    Reset
+                  </Button>
+                </div>
               </form>
             </Form>
           </DialogContent>

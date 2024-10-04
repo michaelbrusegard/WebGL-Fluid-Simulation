@@ -16,7 +16,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Disable telemetry during the build
-ENV NEXT_TELEMETRY_DISABLED=1
+ENV NEXT_TELEMETRY_DISABLED=true
 
 # Build the application
 RUN bunx next build
@@ -27,7 +27,7 @@ FROM base AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
-ENV NEXT_TELEMETRY_DISABLED=1
+ENV NEXT_TELEMETRY_DISABLED=true
 
 RUN addgroup --system --gid 1002 nodejs && \
   adduser --system --uid 1002 nextjs

@@ -1,7 +1,3 @@
 services:
   docs:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - '3021:3000'
+    build: .

@@ -177,4 +177,5 @@ class WebGLFluidEnhanced {
   }
 }
 
+export * from './config';
 export default WebGLFluidEnhanced;
