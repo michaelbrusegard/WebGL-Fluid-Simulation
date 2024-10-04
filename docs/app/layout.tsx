@@ -1,4 +1,5 @@
 import './global.css';
+import { Toaster } from '@/components/ui/toaster';
 import { cn } from '@/lib/utils';
 import { RootProvider } from 'fumadocs-ui/provider';
 import type { Metadata } from 'next';
@@ -59,6 +60,7 @@ export default function Layout({ children }: { children: ReactNode }) {
     >
       <body className='size-full'>
         <RootProvider>{children}</RootProvider>
+        <Toaster />
       </body>
     </html>
   );
