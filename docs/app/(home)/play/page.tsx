@@ -124,34 +124,34 @@ export default function PlayPage() {
   });
 
   const formSchema = z.object({
-    simResolution: z.number().default(defaultConfig.simResolution),
-    dyeResolution: z.number().default(defaultConfig.dyeResolution),
-    captureResolution: z.number().default(defaultConfig.captureResolution),
-    densityDissipation: z.number().default(defaultConfig.densityDissipation),
-    velocityDissipation: z.number().default(defaultConfig.velocityDissipation),
-    pressure: z.number().default(defaultConfig.pressure),
-    pressureIterations: z.number().default(defaultConfig.pressureIterations),
-    curl: z.number().default(defaultConfig.curl),
-    splatRadius: z.number().default(defaultConfig.splatRadius),
-    splatForce: z.number().default(defaultConfig.splatForce),
-    shading: z.boolean().default(defaultConfig.shading),
-    colorful: z.boolean().default(defaultConfig.colorful),
-    colorUpdateSpeed: z.number().default(defaultConfig.colorUpdateSpeed),
-    colorPalette: z.array(z.string()).default(defaultConfig.colorPalette),
-    hover: z.boolean().default(defaultConfig.hover),
-    inverted: z.boolean().default(defaultConfig.inverted),
-    backgroundColor: z.string().default(defaultConfig.backgroundColor),
-    transparent: z.boolean().default(true),
-    brightness: z.number().default(defaultConfig.brightness),
-    bloom: z.boolean().default(defaultConfig.bloom),
-    bloomIterations: z.number().default(defaultConfig.bloomIterations),
-    bloomResolution: z.number().default(defaultConfig.bloomResolution),
-    bloomIntensity: z.number().default(defaultConfig.bloomIntensity),
-    bloomThreshold: z.number().default(defaultConfig.bloomThreshold),
-    bloomSoftKnee: z.number().default(defaultConfig.bloomSoftKnee),
-    sunrays: z.boolean().default(defaultConfig.sunrays),
-    sunraysResolution: z.number().default(defaultConfig.sunraysResolution),
-    sunraysWeight: z.number().default(defaultConfig.sunraysWeight),
+    simResolution: z.number().default(config.simResolution),
+    dyeResolution: z.number().default(config.dyeResolution),
+    captureResolution: z.number().default(config.captureResolution),
+    densityDissipation: z.number().default(config.densityDissipation),
+    velocityDissipation: z.number().default(config.velocityDissipation),
+    pressure: z.number().default(config.pressure),
+    pressureIterations: z.number().default(config.pressureIterations),
+    curl: z.number().default(config.curl),
+    splatRadius: z.number().default(config.splatRadius),
+    splatForce: z.number().default(config.splatForce),
+    shading: z.boolean().default(config.shading),
+    colorful: z.boolean().default(config.colorful),
+    colorUpdateSpeed: z.number().default(config.colorUpdateSpeed),
+    colorPalette: z.array(z.string()).default(config.colorPalette),
+    hover: z.boolean().default(config.hover),
+    inverted: z.boolean().default(config.inverted),
+    backgroundColor: z.string().default(config.backgroundColor),
+    transparent: z.boolean().default(config.transparent),
+    brightness: z.number().default(config.brightness),
+    bloom: z.boolean().default(config.bloom),
+    bloomIterations: z.number().default(config.bloomIterations),
+    bloomResolution: z.number().default(config.bloomResolution),
+    bloomIntensity: z.number().default(config.bloomIntensity),
+    bloomThreshold: z.number().default(config.bloomThreshold),
+    bloomSoftKnee: z.number().default(config.bloomSoftKnee),
+    sunrays: z.boolean().default(config.sunrays),
+    sunraysResolution: z.number().default(config.sunraysResolution),
+    sunraysWeight: z.number().default(config.sunraysWeight),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -164,7 +164,7 @@ export default function PlayPage() {
   }
 
   function onReset() {
-    form.reset();
+    form.reset({ ...defaultConfig, transparent: true });
   }
 
   useEffect(() => {
@@ -199,7 +199,7 @@ export default function PlayPage() {
         <Dialog>
           <DialogTrigger asChild>
             <Button
-              className='pointer-events-auto absolute left-2 top-16'
+              className='pointer-events-auto absolute left-2 top-16 z-50'
               variant='outline'
               size='icon'
               aria-label='Configuration Menu'
@@ -240,7 +240,7 @@ export default function PlayPage() {
                                   field.onChange(e.target.value.split(','))
                                 }
                                 onBlur={field.onBlur}
-                                placeholder='#ff0000,#00ff00,#0000ff'
+                                placeholder='#FF0000,#00FF00,#0000FF'
                                 type='text'
                               />
                             ) : (
