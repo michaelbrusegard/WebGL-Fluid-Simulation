@@ -1,3 +1,10 @@
+# [0.8.0](https://github.com/michaelbrusegard/WebGL-Fluid-Enhanced/compare/v0.7.1...v0.8.0) (2024-10-05)
+
+
+### Features
+
+* delete package-lock when using bun ([7a16b91](https://github.com/michaelbrusegard/WebGL-Fluid-Enhanced/commit/7a16b91f7f996ba6124cff37b06d32682612128a))
+
 ## [0.7.1](https://github.com/michaelbrusegard/WebGL-Fluid-Enhanced/compare/v0.7.0...v0.7.1) (2024-10-05)
 
 
