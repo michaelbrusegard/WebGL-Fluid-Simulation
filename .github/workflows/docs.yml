@@ -24,6 +24,5 @@ jobs:
             git pull
             bun install
             bun run build
-            cd docs
             docker compose down
             docker compose up -d --build

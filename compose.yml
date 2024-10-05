@@ -1,7 +1,7 @@
 services:
   docs:
     build:
-      context: ..
+      context: .
       dockerfile: ./docs/Dockerfile
     restart: unless-stopped
     networks:
