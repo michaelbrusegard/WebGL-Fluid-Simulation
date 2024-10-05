@@ -30,9 +30,9 @@
     "dev": "vite --host",
     "lint": "prettier --write . && eslint --fix .",
     "start": "vite serve",
-    "docs:build": "cd docs && bunx next build",
+    "docs:build": "cd docs && bunx next build && mkdir -p .next/standalone/public .next/standalone/.next/static && cp -r public/* .next/standalone/public && cp -r .next/static/* .next/standalone/.next/static",
     "docs:dev": "cd docs && bunx next dev",
-    "docs:start": "cd docs && bunx next start"
+    "docs:start": "cd docs && bun run .next/standalone/server.js"
   },
   "repository": {
     "type": "git",

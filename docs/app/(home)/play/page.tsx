@@ -216,8 +216,9 @@ export default function PlayPage() {
             case 'p':
             case 'P':
               const drawWhilePaused = event.key === 'P';
-              const isPaused =
-                simulationRef.current.togglePause(drawWhilePaused);
+              const isPaused = simulationRef.current.togglePause(
+                drawWhilePaused,
+              ) as boolean;
               toast(
                 isPaused
                   ? `Simulation paused${drawWhilePaused ? ', drawing enabled' : ''}`

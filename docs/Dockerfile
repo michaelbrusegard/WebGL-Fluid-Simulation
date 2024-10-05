@@ -32,14 +32,11 @@ ENV NEXT_TELEMETRY_DISABLED=true
 RUN addgroup --system --gid 1002 nodejs && \
   adduser --system --uid 1002 nextjs
 
-COPY --from=builder /app/public ./public
-
 # Set the correct permission for prerender cache
 RUN mkdir .next && chown nextjs:nodejs .next
 
 # Automatically leverage output traces to reduce image size
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
 
