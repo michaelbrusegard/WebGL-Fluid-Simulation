@@ -4,7 +4,7 @@ import { ImageZoom } from 'fumadocs-ui/components/image-zoom';
 import { useEffect, useState } from 'react';
 
 function ImageSwitcher() {
-  const images = ['hero0', 'hero1', 'hero2', 'hero3'];
+  const images = ['hero0', 'hero1', 'hero2', 'hero3', 'hero4'];
   const [currentImage, setCurrentImage] = useState(
     images[Math.floor(Math.random() * images.length)],
   );

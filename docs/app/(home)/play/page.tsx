@@ -21,7 +21,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Loader } from '@/components/ui/loader';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CheckIcon, CopyIcon, SettingsIcon } from 'lucide-react';
+import { CheckIcon, CopyIcon, KeyboardIcon, SettingsIcon } from 'lucide-react';
 import {
   parseAsArrayOf,
   parseAsBoolean,
@@ -40,6 +40,7 @@ export default function PlayPage() {
   const simulationRef = useRef<WebGLFluidEnhanced | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isCopied, setIsCopied] = useState(false);
+  const [isConfigOpen, setIsConfigOpen] = useState(false);
   const [config, setConfig] = useQueryStates({
     simResolution: parseAsInteger
       .withDefault(defaultConfig.simResolution)
@@ -165,6 +166,7 @@ export default function PlayPage() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     await setConfig(values);
+    setIsConfigOpen(false);
   }
 
   function onReset() {
@@ -172,14 +174,28 @@ export default function PlayPage() {
   }
 
   async function handleCopy() {
-    const formattedConfig = JSON.stringify(config, null, 2);
-    await navigator.clipboard.writeText(formattedConfig);
-    toast(formattedConfig);
-    setIsCopied(true);
+    const customConfig = Object.fromEntries(
+      Object.entries(config).filter(
+        ([key, value]) =>
+          value !== (defaultConfig as Record<string, unknown>)[key],
+      ),
+    );
 
-    setTimeout(() => {
-      setIsCopied(false);
-    }, 2000);
+    if (Object.keys(customConfig).length === 0) {
+      toast('', {
+        description:
+          'No changes to copy, config is the same as the default config...',
+      });
+    } else {
+      const formattedConfig = JSON.stringify(customConfig, null, 2);
+      await navigator.clipboard.writeText(formattedConfig);
+      toast(<pre>{formattedConfig}</pre>);
+      setIsCopied(true);
+
+      setTimeout(() => {
+        setIsCopied(false);
+      }, 2000);
+    }
   }
 
   useEffect(() => {
@@ -190,12 +206,45 @@ export default function PlayPage() {
       simulationRef.current.start();
       setIsLoading(false);
 
+      function handleKeyDown(event: KeyboardEvent) {
+        if (simulationRef.current) {
+          switch (event.key) {
+            case ' ':
+              event.preventDefault();
+              simulationRef.current.multipleSplats(5);
+              break;
+            case 'p':
+            case 'P':
+              const drawWhilePaused = event.key === 'P';
+              const isPaused =
+                simulationRef.current.togglePause(drawWhilePaused);
+              toast(
+                isPaused
+                  ? `Simulation paused${drawWhilePaused ? ', drawing enabled' : ''}`
+                  : 'Simulation resumed',
+              );
+              break;
+            case 's':
+              simulationRef.current.downloadScreenshot();
+              toast(
+                <>
+                  <strong>'fluid.png'</strong> saved to <em>Downloads</em>{' '}
+                  folder.
+                </>,
+              );
+              break;
+          }
+        }
+      }
+      window.addEventListener('keydown', handleKeyDown);
+
       return () => {
         document.body.classList.remove('overflow-hidden');
         if (simulationRef.current) {
           simulationRef.current.stop();
           simulationRef.current = null;
         }
+        window.removeEventListener('keydown', handleKeyDown);
       };
     }
   }, []);
@@ -215,7 +264,7 @@ export default function PlayPage() {
         <Loader size='lg' />
       ) : (
         <div className='pointer-events-none absolute size-full max-w-7xl'>
-          <Dialog>
+          <Dialog open={isConfigOpen} onOpenChange={setIsConfigOpen}>
             <DialogTrigger asChild>
               <Button
                 className='pointer-events-auto absolute left-2 top-16 z-10'
@@ -227,7 +276,7 @@ export default function PlayPage() {
               </Button>
             </DialogTrigger>
             <DialogContent className='!size-[91.666667%] max-w-7xl overflow-auto'>
-              <DialogHeader className='flex flex-row items-center justify-items-start gap-3'>
+              <DialogHeader className='flex flex-row items-center justify-start gap-3'>
                 <DialogTitle>Configuration</DialogTitle>
                 <Button
                   className='size-6'
@@ -301,7 +350,7 @@ export default function PlayPage() {
                       />
                     ))}
                   </div>
-                  <div className='flex items-center justify-end gap-2'>
+                  <div className='flex items-center justify-start gap-2'>
                     <Button type='submit'>Apply</Button>
                     <Button type='button' variant='outline' onClick={onReset}>
                       Reset
@@ -309,6 +358,57 @@ export default function PlayPage() {
                   </div>
                 </form>
               </Form>
+            </DialogContent>
+          </Dialog>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button
+                className='pointer-events-auto absolute left-14 top-16 z-10'
+                variant='outline'
+                size='icon'
+                aria-label='Configuration Menu'
+              >
+                <KeyboardIcon aria-hidden='true' />
+              </Button>
+            </DialogTrigger>
+            <DialogContent className='overflow-auto'>
+              <DialogHeader className='mb-6'>
+                <DialogTitle>Keybinds</DialogTitle>
+              </DialogHeader>
+              <div className='bg-popover mb-4 flex h-20 flex-col rounded-md p-4'>
+                <div className='mb-2 flex items-center'>
+                  <kbd className='bg-muted mr-2 rounded px-2 py-1'>space</kbd>
+                  <span>: multipleSplats</span>
+                </div>
+                <p className='text-muted-foreground text-sm'>
+                  Is set to splat 5 splats
+                </p>
+              </div>
+              <div className='bg-popover mb-4 flex h-20 flex-col rounded-md p-4'>
+                <div className='mb-2 flex items-center'>
+                  <kbd className='bg-muted mr-2 rounded px-2 py-1'>p</kbd>
+                  <span>: togglePause</span>
+                </div>
+              </div>
+              <div className='bg-popover mb-4 flex h-20 flex-col rounded-md p-4'>
+                <div className='mb-2 flex items-center'>
+                  <kbd className='bg-muted mr-2 rounded px-2 py-1'>shift</kbd> +
+                  <kbd className='bg-muted mr-2 rounded px-2 py-1'>p</kbd>
+                  <span>: togglePause</span>
+                </div>
+                <p className='text-muted-foreground text-sm'>
+                  Has drawWhilePaused enabled{' '}
+                </p>
+              </div>
+              <div className='bg-popover mb-4 flex h-20 flex-col rounded-md p-4'>
+                <div className='mb-2 flex items-center'>
+                  <kbd className='bg-muted mr-2 rounded px-2 py-1'>s</kbd>
+                  <span>: downloadScreenshot</span>
+                </div>
+                <p className='text-muted-foreground text-sm'>
+                  NOTE: Screenshots often look better with transparency disabled
+                </p>
+              </div>
             </DialogContent>
           </Dialog>
         </div>

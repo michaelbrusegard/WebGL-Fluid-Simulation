@@ -1249,6 +1249,11 @@ class Simulation {
       target.width,
       target.height,
     );
+
+    if (this.inverted) {
+      Screenshot.invertImageColors(captureCanvas);
+    }
+
     const datauri = captureCanvas.toDataURL();
     Screenshot.downloadURI('fluid.png', datauri);
     URL.revokeObjectURL(datauri);

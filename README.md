@@ -6,24 +6,27 @@
 [![npm downloads](<https://img.shields.io/npm/dt/webgl-fluid-enhanced?logo=npm&color=rgba(203,0,0,0.9)>)](https://www.npmjs.com/package/webgl-fluid-enhanced)
 [![conventional commits](https://img.shields.io/badge/commits-Conventional-FE5196.svg?logo=conventionalcommits)](https://conventionalcommits.org)
 
-I wanted to use Pavel Dobryakov's [WebGL Fluid Simulation](https://github.com/PavelDoGreat/WebGL-Fluid-Simulation) for [my personal website](https://www.michaelbrusegard.com) ([see code](https://github.com/michaelbrusegard/personal-website)), but I couldn't find a way to use it with Next.js. So I decided to add ES Module Support. I also added Typescript and some extra config options so I can personally customise it how I like. I removed the config GUI and other boilerplate and minimized the package. I hope you find it useful!
+> [!IMPORTANT]
+> The new documentation and playground can be found [here](https://webgl-fluid-enhanced.michaelbrusegard.com).
 
-#### [Preview here!](https://michaelbrusegard.github.io/WebGL-Fluid-Enhanced/)
+## Table of Contents
 
-## Screenshots
+1. [WebGL Fluid Enhanced](#webgl-fluid-enhanced)
+2. [Documentation for Outdated Version (v0.6.1 and Prior)](#documentation-for-outdated-version-v061-and-prior)
+3. [Want to contribute](#want-to-contribute)
+4. [References](#references)
+5. [License](#license)
 
-![fluid](https://github.com/michaelbrusegard/WebGL-Fluid-Enhanced/assets/56915010/6671d84c-1672-41a6-851c-b20b174dd803)
-![fluid](https://github.com/michaelbrusegard/WebGL-Fluid-Enhanced/assets/56915010/f1d199b1-deb2-45f7-a2b1-2992eb42f562)
-![fluid](https://github.com/michaelbrusegard/WebGL-Fluid-Enhanced/assets/56915010/6cc25eca-a60d-4a5c-bd19-1b8c034e0f31)
-![fluid](https://github.com/michaelbrusegard/WebGL-Fluid-Enhanced/assets/56915010/0cb4c9e3-dcba-4545-98ca-9c959e29bb73)
 
-## Install
+## Documentation for Outdated Version (v0.6.1 and Prior)
+
+### Install
 
 ```bash
   npm install webgl-fluid-enhanced
 ```
 
-## New Features
+### New Features
 
 - Ability to change config after simulation has started
 - Use hover to activate
@@ -38,7 +41,7 @@ I wanted to use Pavel Dobryakov's [WebGL Fluid Simulation](https://github.com/Pa
 - Method to splat at specific coordinates
 - TypeScript support
 
-## Config options
+### Config options
 
 ```js
 webGLFluidEnhanced.config({
@@ -75,9 +78,9 @@ webGLFluidEnhanced.config({
 });
 ```
 
-## General info
+### General info
 
-### Usage
+#### Usage
 
 Initialise:
 
@@ -135,17 +138,17 @@ Download a screenshot:
 webGLFluidEnhanced.screenshot();
 ```
 
-### Set background image
+#### Set background image
 
 To set background image make sure the `TRANSPARENT` option is set to `true`, and in the CSS you can set `background-image: url('<PHOTO-URL>');` and `background-size: 100% 100%;` to fill the whole canvas.
 
-### Background color
+#### Background color
 
 When using the `BACK_COLOR` option, the color you provided will be whitened when the `BLOOM` option is set to `true`.
 
-## Examples
+### Examples
 
-### HTML
+#### HTML
 
 ```html
 <!doctype html>
@@ -174,7 +177,7 @@ When using the `BACK_COLOR` option, the color you provided will be whitened when
 </html>
 ```
 
-### React
+#### React
 
 ```js
 import { useEffect, useRef } from 'react';
@@ -198,7 +201,7 @@ const App = () => {
 export default App;
 ```
 
-### Next.js (tailwindcss)
+#### Next.js (tailwindcss)
 
 ```tsx
 'use client';
@@ -226,7 +229,7 @@ const App = () => {
 export default App;
 ```
 
-### Vue.js
+#### Vue.js
 
 ```vue
 <!-- Not tested! -->
@@ -257,7 +260,7 @@ canvas {
 </style>
 ```
 
-### Angular
+#### Angular
 
 ```ts
 // Not tested!
@@ -283,7 +286,7 @@ export class AppComponent implements OnInit {
 }
 ```
 
-### Svelte
+#### Svelte
 
 ```svelte
 <!-- Not tested! -->
@@ -306,11 +309,13 @@ export class AppComponent implements OnInit {
 <canvas bind:this={canvasRef} style="width: 100vw; height: 100vh;" />
 ```
 
-## Want to contribute?
+## Want to contribute
 
-Feel free to open an issue or a pull request! I'm always open to suggestions and improvements, and I have tried to make the development environment as good as possible. Right now I have only added typescript definitions to the package API because I am not that familiar with all the internal code of Pavel Dobryakov's work.
+Feel free to open an issue or a pull request! I'm always open to suggestions and improvements, and I have tried to make the development environment as good as possible with a descriptive file structure and TypeScript definitions.
 
 ## References
+
+https://github.com/PavelDoGreat/WebGL-Fluid-Simulation
 
 https://developer.nvidia.com/gpugems/gpugems/part-vi-beyond-triangles/chapter-38-fast-fluid-dynamics-simulation-gpu
 

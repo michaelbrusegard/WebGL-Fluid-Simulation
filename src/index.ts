@@ -26,12 +26,13 @@ class WebGLFluidEnhanced {
     this.simulation.stop();
   }
 
-  public togglePause(drawWhilePaused = false) {
-    if (!this.simulation.hasStarted) return;
+  public togglePause(drawWhilePaused = false): boolean {
+    if (!this.simulation.hasStarted) return false;
     this.simulation.paused = !this.simulation.paused;
     if (this.simulation.paused) {
       this.simulation.drawWhilePaused = drawWhilePaused;
     }
+    return this.simulation.paused;
   }
 
   public multipleSplats(amount: number) {

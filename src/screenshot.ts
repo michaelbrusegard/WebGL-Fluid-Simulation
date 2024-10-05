@@ -58,6 +58,17 @@ class Screenshot {
     return captureCanvas;
   }
 
+  public static invertImageColors(canvas: HTMLCanvasElement) {
+    const ctx = canvas.getContext('2d')!;
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < imageData.data.length; i += 4) {
+      imageData.data[i] = 255 - imageData.data[i]!;
+      imageData.data[i + 1] = 255 - imageData.data[i + 1]!;
+      imageData.data[i + 2] = 255 - imageData.data[i + 2]!;
+    }
+    ctx.putImageData(imageData, 0, 0);
+  }
+
   public static downloadURI(filename: string, uri: string) {
     const link = document.createElement('a');
     link.download = filename;
