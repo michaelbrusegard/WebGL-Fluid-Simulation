@@ -5,6 +5,15 @@
 
 * linting and workflow dispatch ([171eb8e](https://github.com/michaelbrusegard/WebGL-Fluid-Enhanced/commit/171eb8ea7a73d802ff44da59401d634e079d6c59))
 * moved compose file to root for proper container naming ([9e883c6](https://github.com/michaelbrusegard/WebGL-Fluid-Enhanced/commit/9e883c61e2e544e165c2df93085e1cea092194c1))
+* nextjs vulnerability update ([3ab4371](https://github.com/michaelbrusegard/WebGL-Fluid-Enhanced/commit/3ab43716ae78aa6080fbd1fd8387db9ee853993d))
+
+## [0.7.1](https://github.com/michaelbrusegard/WebGL-Fluid-Enhanced/compare/v0.7.0...v0.7.1) (2024-10-05)
+
+
+### Bug Fixes
+
+* linting and workflow dispatch ([171eb8e](https://github.com/michaelbrusegard/WebGL-Fluid-Enhanced/commit/171eb8ea7a73d802ff44da59401d634e079d6c59))
+* moved compose file to root for proper container naming ([9e883c6](https://github.com/michaelbrusegard/WebGL-Fluid-Enhanced/commit/9e883c61e2e544e165c2df93085e1cea092194c1))
 
 ## [0.7.1](https://github.com/michaelbrusegard/WebGL-Fluid-Enhanced/compare/v0.7.0...v0.7.1) (2024-10-05)
 
