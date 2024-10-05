@@ -1,3 +1,16 @@
+# [0.7.0](https://github.com/michaelbrusegard/WebGL-Fluid-Enhanced/compare/v0.6.1...v0.7.0) (2024-10-05)
+
+
+### Bug Fixes
+
+* docker script folder name to have capitalized letters ([9d9a290](https://github.com/michaelbrusegard/WebGL-Fluid-Enhanced/commit/9d9a290928a7de5a57ed9389d2a56b47a3e45a52))
+
+
+### Features
+
+* add invert option to be able to use black color ([2826f2e](https://github.com/michaelbrusegard/WebGL-Fluid-Enhanced/commit/2826f2e596bc3f1ae57a11a788c30b40e71617c7))
+* add new config setter ([1cf8d08](https://github.com/michaelbrusegard/WebGL-Fluid-Enhanced/commit/1cf8d0817bf15a068897ed10da13acf23d55ed44))
+
 ## [0.6.1](https://github.com/michaelbrusegard/WebGL-Fluid-Enhanced/compare/v0.6.0...v0.6.1) (2024-04-12)
 
 ### Bug Fixes
