@@ -1,3 +1,9 @@
 services:
   docs:
     build: .
+    restart: unless-stopped
+    networks:
+      - nginx_default
+networks:
+  nginx_default:
+    external: true
