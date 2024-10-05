@@ -17,7 +17,6 @@
 4. [References](#references)
 5. [License](#license)
 
-
 ## Documentation for Outdated Version (v0.6.1 and Prior)
 
 ### Install

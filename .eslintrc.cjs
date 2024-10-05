@@ -30,7 +30,7 @@ const config = {
       },
     ],
   },
-  ignorePatterns: ['dist', 'out', 'node_modules', '.next'],
+  ignorePatterns: ['dist', 'node_modules', '.next', 'docs'],
 };
 
 module.exports = config;

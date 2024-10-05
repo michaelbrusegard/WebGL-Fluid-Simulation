@@ -8,7 +8,7 @@ description: Triggering splats
 To trigger multiple random splats accross the canvas call the `multipleSplats` method. It has an optional `amount` property to set how many splats to trigger.
 
 ```javascript
-simulation.multipleSplats(5)
+simulation.multipleSplats(5);
 ```
 
 This will spawn 5 random splats on the canvas.
@@ -23,17 +23,17 @@ const y = container.clientHeight / 2;
 const dx = 0;
 const dy = 100;
 
-simulation.splatAtLocation(x, y, dx, dy)
+simulation.splatAtLocation(x, y, dx, dy);
 ```
 
 This will splat at the center of the canvas with a force of 100 upwards.
 
-<Callout type="info">
-  The `dx` and `dy` values are best in the range from -500 to 500, with 0 representing no force
+<Callout type='info'>
+  The `dx` and `dy` values are best in the range from -500 to 500, with 0
+  representing no force
 </Callout>
 
 ### Type Table
-
 
 <TypeTable
   type={{
@@ -61,8 +61,9 @@ This will splat at the center of the canvas with a force of 100 upwards.
   }}
 />
 
-<Callout type="info">
-The `color` parameter is optional. If not provided, colors from the palette or then a random color may be used.
+<Callout type='info'>
+  The `color` parameter is optional. If not provided, colors from the palette or
+  then a random color may be used.
 </Callout>
 
 ## Examples

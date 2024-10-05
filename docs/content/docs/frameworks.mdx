@@ -4,12 +4,13 @@ description: How to use with different frameworks and libraries
 icon: Library
 ---
 
-<Callout type="info">
-    All examples below are passing a div element to the optional `container` prop in the constructor. This is not required
+<Callout type='info'>
+  All examples below are passing a div element to the optional `container` prop
+  in the constructor. This is not required
 </Callout>
 
-<Callout type="warn">
-    The element passed must have a width and height set for it to be visible
+<Callout type='warn'>
+  The element passed must have a width and height set for it to be visible
 </Callout>
 
 ## HTML
@@ -59,13 +60,13 @@ function Simulation() {
   }, []);
 
   return <div ref={containerRef} style={{ width: '100vw', height: '100vh' }} />;
-};
+}
 
 export { Simulation };
 ```
 
-<Callout type="warn">
-    When using Next.js make sure to include `'use client';` at the top of the file
+<Callout type='warn'>
+  When using Next.js make sure to include `'use client';` at the top of the file
 </Callout>
 
 ## Vue
@@ -162,9 +163,7 @@ function Simulation() {
     });
   });
 
-  return (
-    <div ref={container} style="width: 100vw; height: 100vh;"></div>
-  );
+  return <div ref={container} style='width: 100vw; height: 100vh;'></div>;
 }
 
 export { Simulation };

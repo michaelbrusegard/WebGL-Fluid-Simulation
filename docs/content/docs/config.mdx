@@ -6,6 +6,7 @@ description: Set configuration options for the simulation
 ## Usage
 
 To set configuration options for the simulation, you can pass an object with the desired options to the `setConfig` method.
+
 ```javascript
 simulation.setConfig({
   colorPalette: ['#cc211b', '#f1c593', '#e87e54', '#f193a7', '#ec6fa9'],
@@ -19,19 +20,16 @@ simulation.setConfig({
 });
 ```
 
-<Callout type="info">
-  All colors are hex strings
-</Callout>
+<Callout type='info'>All colors are hex strings</Callout>
 
 Run `setConfig()` before starting the simulation `simulation.start()` to make sure that the configuration is applied before the simulation starts.
 
-<Callout type="info">
-  `setConfig()` can be called during the simulation
-</Callout>
+<Callout type='info'>`setConfig()` can be called during the simulation</Callout>
 
 ### Default Config
 
 You can get the default configuration by importing it from the package.
+
 ```javascript
 import WebGLFluidEnhanced, { defaultConfig } from 'webgl-fluid-enhanced';
 ```
@@ -130,7 +128,8 @@ import WebGLFluidEnhanced, { defaultConfig } from 'webgl-fluid-enhanced';
       default: 'false',
     },
     brightness: {
-      description: 'Color brightness (Recommended lower than 1.0 if BLOOM is enabled)',
+      description:
+        'Color brightness (Recommended lower than 1.0 if BLOOM is enabled)',
       type: 'number',
       default: 0.5,
     },
@@ -182,11 +181,12 @@ import WebGLFluidEnhanced, { defaultConfig } from 'webgl-fluid-enhanced';
   }}
 />
 
-<Callout title="Mobile" type="info">
-  If the simulation is running on a mobile device, the `dyeResolution` will be set to `512`.
+<Callout title='Mobile' type='info'>
+  If the simulation is running on a mobile device, the `dyeResolution` will be
+  set to `512`.
 </Callout>
 
-<Callout title="Linear Filtering" type="warn">
-  If the browser does not support linear filtering, the `dyeResolution` will be set to `512` and the `shading`, `bloom`, and `sunrays` will be disabled.
+<Callout title='Linear Filtering' type='warn'>
+  If the browser does not support linear filtering, the `dyeResolution` will be
+  set to `512` and the `shading`, `bloom`, and `sunrays` will be disabled.
 </Callout>
-

@@ -45,6 +45,7 @@ For a simple HTML website you can load the script [directly](/docs/frameworks#ht
 ## Initialization
 
 To initialize the WebGL Fluid Simulation, import the `WebGLFluidEnhanced` class and create a new instance.
+
 ```javascript
 import WebGLFluidEnhanced from 'webgl-fluid-enhanced';
 
@@ -54,9 +55,9 @@ const simulation = new WebGLFluidEnhanced();
 You can pass an optional container element to the constructor to render the simulation inside it:
 
 ```javascript
-const container = document.querySelector('div')
+const container = document.querySelector('div');
 
-const simulation = new WebGLFluidEnhanced(container)
+const simulation = new WebGLFluidEnhanced(container);
 ```
 
 If not provided, the simulation will be rendered in the body element.
@@ -64,16 +65,18 @@ If not provided, the simulation will be rendered in the body element.
 ## Start & Stop
 
 To start the simulation, call the `start` method on the instance.
+
 ```javascript
 simulation.start();
 ```
 
 And to stop the simulation, call the `stop` method.
+
 ```javascript
 simulation.stop();
 ```
 
-<Callout type="warn">
+<Callout type='warn'>
   Call `stop` before removing the simulation from the DOM to avoid memory leaks.
 </Callout>
 
@@ -97,4 +100,3 @@ Some common questions you may encounter.
 
   </Accordion>
 </Accordions>
-
