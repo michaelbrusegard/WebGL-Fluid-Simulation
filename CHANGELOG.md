@@ -1,3 +1,10 @@
+## [0.7.1](https://github.com/michaelbrusegard/WebGL-Fluid-Enhanced/compare/v0.7.0...v0.7.1) (2024-10-05)
+
+
+### Bug Fixes
+
+* linting and workflow dispatch ([171eb8e](https://github.com/michaelbrusegard/WebGL-Fluid-Enhanced/commit/171eb8ea7a73d802ff44da59401d634e079d6c59))
+
 # [0.7.0](https://github.com/michaelbrusegard/WebGL-Fluid-Enhanced/compare/v0.6.1...v0.7.0) (2024-10-05)
 
 ### Bug Fixes
