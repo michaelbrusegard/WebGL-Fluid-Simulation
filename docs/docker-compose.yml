@@ -1,6 +1,8 @@
 services:
   docs:
-    build: .
+    build:
+      context: ..
+      dockerfile: ./docs/Dockerfile
     restart: unless-stopped
     networks:
       - nginx_default
