@@ -23,6 +23,7 @@ jobs:
             cd /data/WebGL-Fluid-Enhanced
             git pull
             bun install
+            cd docs && bun install
             bun run build
             cd docs
             docker compose down
