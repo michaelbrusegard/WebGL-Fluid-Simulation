@@ -199,12 +199,12 @@ export default function PlayPage() {
   }
 
   useEffect(() => {
-    setIsLoading(false);
     document.body.classList.add('overflow-hidden');
     if (mainRef.current) {
       simulationRef.current = new WebGLFluidEnhanced(mainRef.current);
       simulationRef.current.setConfig(config);
       simulationRef.current.start();
+      setIsLoading(false);
 
       function handleKeyDown(event: KeyboardEvent) {
         if (simulationRef.current) {
@@ -258,11 +258,13 @@ export default function PlayPage() {
 
   return (
     <main
-      className='relative -mt-14 flex h-full items-center justify-center bg-white dark:bg-black'
+      className='relative -mt-14 flex size-full items-center justify-center bg-white dark:bg-black'
       ref={mainRef}
     >
       {isLoading ? (
-        <Loader size='lg' />
+        <div className='absolute flex size-full items-center justify-center'>
+          <Loader size='lg' />
+        </div>
       ) : (
         <div className='pointer-events-none absolute size-full max-w-7xl'>
           <Dialog open={isConfigOpen} onOpenChange={setIsConfigOpen}>
