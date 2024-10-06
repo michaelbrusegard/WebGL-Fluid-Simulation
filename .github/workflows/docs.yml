@@ -22,7 +22,5 @@ jobs:
           script: |
             cd /data/WebGL-Fluid-Enhanced
             git pull
-            bun install
-            bun run build
             docker compose down
             docker compose up -d --build

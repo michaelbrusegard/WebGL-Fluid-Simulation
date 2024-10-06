@@ -1,28 +1,26 @@
 FROM imbios/bun-node:22-slim AS base
 
-# Install dependencies only when needed
 FROM base AS deps
+
+WORKDIR /app
+
+COPY package.json bun.lockb ./
+RUN bun install  --frozen-lockfile
 
 WORKDIR /app/docs
 
-# Install dependencies
 COPY docs/package.json docs/bun.lockb ./
 RUN bun install  --frozen-lockfile
 
-# Rebuild the source code only when needed
 FROM base AS builder
-WORKDIR /app/docs
-COPY --from=deps /app/docs/node_modules ./node_modules
-COPY docs .
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
 
-# Copy dist folder
-COPY dist ../dist
-
-# Disable telemetry during the build
 ENV NEXT_TELEMETRY_DISABLED=true
 
-# Build the application
-RUN bunx next build
+RUN bun run build
+RUN bun run docs:build
 
 # Production image, copy all the files and run next
 FROM base AS runner
