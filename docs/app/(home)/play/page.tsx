@@ -199,12 +199,12 @@ export default function PlayPage() {
   }
 
   useEffect(() => {
+    setIsLoading(false);
     document.body.classList.add('overflow-hidden');
     if (mainRef.current) {
       simulationRef.current = new WebGLFluidEnhanced(mainRef.current);
       simulationRef.current.setConfig(config);
       simulationRef.current.start();
-      setIsLoading(false);
 
       function handleKeyDown(event: KeyboardEvent) {
         if (simulationRef.current) {
