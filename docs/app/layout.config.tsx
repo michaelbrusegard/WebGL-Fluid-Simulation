@@ -1,5 +1,5 @@
 import { source } from '@/app/source';
-import { cn } from '@/utils';
+import { cn } from '@/lib/utils';
 import { type HomeLayoutProps } from 'fumadocs-ui/home-layout';
 import { type DocsLayoutProps } from 'fumadocs-ui/layout';
 import { BookText, Joystick } from 'lucide-react';
