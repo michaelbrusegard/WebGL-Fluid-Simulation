@@ -65,7 +65,7 @@ class Simulation {
   private _bloom!: FBO;
   private _sunrays!: FBO;
   private _sunraysTemp!: FBO;
-  private animationFrameID!: number;
+  private animationFrameId!: number;
 
   constructor(container: HTMLElement) {
     let canvas = container.querySelector('canvas');
@@ -138,7 +138,7 @@ class Simulation {
   public stop() {
     this.pointers = [];
 
-    cancelAnimationFrame(this.animationFrameID);
+    cancelAnimationFrame(this.animationFrameId);
 
     this.canvas.removeEventListener('mousedown', this.handleMouseDown);
     this.canvas.removeEventListener('mousemove', this.handleMouseMove);
@@ -825,7 +825,7 @@ class Simulation {
 
     // This is bound in the constructor, so it's safe to call here
     // eslint-disable-next-line
-    this.animationFrameID = requestAnimationFrame(this.update);
+    this.animationFrameId = requestAnimationFrame(this.update);
   }
 
   private calcDeltaTime(): number {
