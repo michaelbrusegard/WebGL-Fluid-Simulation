@@ -12,10 +12,28 @@
 ## Table of Contents
 
 1. [WebGL Fluid Enhanced](#webgl-fluid-enhanced)
-2. [Documentation for Outdated Version (v0.6.1 and Prior)](#documentation-for-outdated-version-v061-and-prior)
-3. [Want to contribute](#want-to-contribute)
-4. [References](#references)
-5. [License](#license)
+2. [Want to contribute](#want-to-contribute)
+3. [References](#references)
+4. [License](#license)
+5. [Documentation for Outdated Version (v0.6.1 and Prior)](#documentation-for-outdated-version-v061-and-prior)
+
+## Want to contribute
+
+Feel free to open an issue or a pull request! I'm always open to suggestions and improvements, and I have tried to make the development environment as good as possible with a descriptive file structure and TypeScript definitions.
+
+## References
+
+<https://github.com/PavelDoGreat/WebGL-Fluid-Simulation>
+
+<https://developer.nvidia.com/gpugems/gpugems/part-vi-beyond-triangles/chapter-38-fast-fluid-dynamics-simulation-gpu>
+
+<https://github.com/mharrys/fluids-2d>
+
+<https://github.com/haxiomic/GPU-Fluid-Experiments>
+
+## License
+
+The code is available under the [MIT license](LICENSE)
 
 ## Documentation for Outdated Version (v0.6.1 and Prior)
 
@@ -307,21 +325,3 @@ export class AppComponent implements OnInit {
 
 <canvas bind:this={canvasRef} style="width: 100vw; height: 100vh;" />
 ```
-
-## Want to contribute
-
-Feel free to open an issue or a pull request! I'm always open to suggestions and improvements, and I have tried to make the development environment as good as possible with a descriptive file structure and TypeScript definitions.
-
-## References
-
-https://github.com/PavelDoGreat/WebGL-Fluid-Simulation
-
-https://developer.nvidia.com/gpugems/gpugems/part-vi-beyond-triangles/chapter-38-fast-fluid-dynamics-simulation-gpu
-
-https://github.com/mharrys/fluids-2d
-
-https://github.com/haxiomic/GPU-Fluid-Experiments
-
-## License
-
-The code is available under the [MIT license](LICENSE)
