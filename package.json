@@ -41,7 +41,7 @@
   "bugs": {
     "url": "https://github.com/michaelbrusegard/WebGL-Fluid-Enhanced/issues"
   },
-  "homepage": "https://michaelbrusegard.github.io/WebGL-Fluid-Enhanced/",
+  "homepage": "https://webgl-fluid-enhanced.michaelbrusegard.com",
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
